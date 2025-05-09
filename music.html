@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Nexus</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="/nexus/img/favicon-32x32.png">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    <style>
+        body {
+            font-family: "Lato", sans-serif;
+        }
+
+        .mySlides {
+            display: none;
+        }
+
+        select {
+            background: #1a1a1a;
+            color: white;
+            border: 1px solid #333;
+            padding: 10px;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 300px;
+            font-size: 16px;
+        }
+
+        select option {
+            background: #1a1a1a;
+            color: white;
+        }
+
+        .embed-container {
+            margin-top: 20px;
+            padding: 10px;
+            background: #ffffff;
+            border-radius: 5px;
+        }
+
+        .track-item {
+            cursor: pointer;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            transition: background 0.2s ease;
+        }
+
+        .track-item:hover {
+            background: #333;
+        }
+
+        @media screen and (max-width: 600px) {
+            .playlist-sidebar {
+                margin-top: 20px;
+                border-left: none;
+                border-top: 1px solid #333;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <div class="w3-top">
+        <div class="w3-bar w3-black w3-card">
+            <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right"
+                href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i
+                    class="fa fa-bars"></i></a>
+            <a href="index.html" class="w3-bar-item w3-button w3-padding-large">HOME</a>
+            <a href="music.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small">MUSIC</a>
+            <a href="#art" class="w3-bar-item w3-button w3-padding-large w3-hide-small">ART</a>
+            <a href="#code" class="w3-bar-item w3-button w3-padding-large w3-hide-small">CODE</a>
+            <a href="#videos" class="w3-bar-item w3-button w3-padding-large w3-hide-small">VIDEOS</a>
+            <a href="#extras" class="w3-bar-item w3-button w3-padding-large w3-hide-small">EXTRAS</a>
+            <a href="#contact" class="w3-bar-item w3-button w3-padding-large w3-hide-small">CONTACT</a>
+            <a href="javascript:void(0)" class="w3-padding-large w3-hover-white w3-hide-small w3-right"><i
+                    class="fa fa-search"></i></a>
+        </div>
+    </div>
+
+    <!-- Navbar on small screens -->
+    <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
+        <a href="music.html" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">MUSIC</a>
+        <a href="#art" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">ART</a>
+        <a href="#code" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">CODE</a>
+    </div>
+
+    <!-- Page content -->
+    <div class="w3-content" style="max-width:2000px;margin-top:46px">
+
+        <!-- Automatic Slideshow Images -->
+        <div class="mySlides w3-display-container w3-center w3-black">
+            <img src="/nexus/img/9 (9).jpg" style="width:52%">
+            <div class="w3-display-bottommiddle w3-container w3-text-white w3-padding-32 w3-hide-small">
+                <h3>The Saint's Mouth Bleeds, So The Sinner's Mouth Can Gleam</h3>
+                <p><b>Available on all platforms</b></p>
+            </div>
+        </div>
+        <div class="mySlides w3-display-container w3-center w3-black">
+            <img src="/nexus/img/ps.jpg" style="width:52%">
+            <div class="w3-display-bottommiddle w3-container w3-text-white w3-padding-32 w3-hide-small">
+                <h3>PROJECT SUNSHINE</h3>
+                <p><b>Scrapped Project</b></p>
+            </div>
+        </div>
+        <div class="mySlides w3-display-container w3-center w3-black">
+            <img src="/nexus/img/space.jpg" style="width:52%">
+            <div class="w3-display-bottommiddle w3-container w3-text-white w3-padding-32 w3-hide-small">
+                <h3>Edge of Nowhere</h3>
+                <p><b>Available on all platforms</b></p>
+            </div>
+        </div>
+        <div class="mySlides w3-display-container w3-center w3-black">
+            <img src="/nexus/img/UFO.png" style="width:52%">
+            <div class="w3-display-bottommiddle w3-container w3-text-white w3-padding-32 w3-hide-small">
+                <h3>encounters</h3>
+                <p><b>Available on all platforms</b></p>
+            </div>
+        </div>
+
+        <!-- The Music Section -->
+        <div class="w3-container w3-content w3-padding-64 w3-center" style="max-width:1200px" id="music">
+            <h2 class="w3-wide w3-center">bilzeebub</h2>
+            <p class="w3-opacity w3-center"><i>Music is the language of God, math is the syntax.</i></p>
+                    <select id="album-select" onchange="showAlbum(this.value)">
+                        <option value="" disabled selected>Select an Album</option>
+                    </select>
+                    <div id="embed-container" class="embed-container w3-center"></div>
+                <div class="l4 m12 w3-center"></div>
+        </div>
+
+        <!-- End Page Content -->
+    </div>
+
+    <!-- Footer -->
+    <footer class="w3-container w3-padding-64 w3-center w3-opacity w3-light-grey w3-xlarge">
+        <i class="fa fa-facebook-official w3-hover-opacity"></i>
+        <i class="fa fa-instagram w3-hover-opacity"></i>
+        <i class="fa fa-twitter w3-hover-opacity"></i>
+        <p class="w3-medium">The Nexus</p>
+    </footer>
+
+    <script>
+        // Automatic Slideshow - change image every 4 seconds
+        var myIndex = 0;
+        carousel();
+
+        function carousel() {
+            var i;
+            var x = document.getElementsByClassName("mySlides");
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            myIndex++;
+            if (myIndex > x.length) { myIndex = 1 }
+            x[myIndex - 1].style.display = "block";
+            setTimeout(carousel, 4000);
+        }
+
+        // Navbar toggle for small screens
+        function myFunction() {
+            var x = document.getElementById("navDemo");
+            if (x.className.indexOf("w3-show") == -1) {
+                x.className += " w3-show";
+            } else {
+                x.className = x.className.replace(" w3-show", "");
+            }
+        }
+
+        // Music Player Logic
+        const albums = [
+            {
+                id: 1,
+                title: "It Takes Time",
+                artist: "bilzeebub",
+                albumArt: "/nexus/img/takestime",
+                embeds: {
+                    spotify: "https://open.spotify.com/embed/album/7s3oAOeQi5PZ2BfKm8Ub8p?utm_source=generator&theme=0",
+                    apple: "https://embed.music.apple.com/us/album/it-takes-time/1781948906", // Replace with actual embed
+                    youtube: "https://www.youtube.com/embed/videoseries?si=BMavNrVg96CsMnFO&amp;list=OLAK5uy_le8O5-dd76oBKlYmEw-Z4w9hcJiaMeJiE"
+                },
+            },
+            {
+                id: 2,
+                title: "The Saint's Mouth Bleeds",
+                artist: "bilzeebub",
+                albumArt: "/nexus/img/9 (9).jpg",
+                embeds: {
+                    spotify: "https://open.spotify.com/embed/album/2CepuWwtImRMW3Pec2IgYz?utm_source=generator&theme=0",
+                    apple: "https://embed.music.apple.com/us/album/the-saints-mouth-bleeds-so-the-sinners-mouth-can/1758577742", // Replace with actual embed
+                    youtube: "https://www.youtube.com/embed/FdtPRc_tUIk?si=WdmY_WCCRDOy3h-M"
+                },
+            },
+            {
+                id: 3,
+                title: "Edge of Nowhere",
+                artist: "bilzeebub",
+                albumArt: "/nexus/img/space.jpg",
+                embeds: {
+                    spotify: "https://open.spotify.com/embed/album/45zUHDMjnyd7YlPHaNCOqI?utm_source=generator&theme=0",
+                    apple: "https://embed.music.apple.com/us/album/the-edge-of-nowhere-single/1733413116", // Replace with actual embed
+                    youtube: "https://www.youtube.com/embed/ev4e7JPcOKA?si=8XNvDtFllLiuN4_l"
+                },
+            },
+            {
+                id: 4,
+                title: "encounters",
+                artist: "bilzeebub",
+                albumArt: "/nexus/img/UFO.png",
+                embeds: {
+                    spotify: "https://open.spotify.com/embed/album/6tX8MxyAp9Kl051u7Aovs8?utm_source=generator&theme=0",
+                    apple: "https://embed.music.apple.com/us/album/encounters-single/1757970176", // Replace with actual embed
+                    youtube: "https://www.youtube.com/embed/ZD2NbnmDSE0?si=Hz27gk_J8CLlZ9LG"
+                },
+            },
+
+        ];
+
+        let selectedAlbumId = null;
+
+        function populateDropdown() {
+            const select = document.getElementById("album-select");
+            albums.forEach(album => {
+                const option = document.createElement("option");
+                option.value = album.id;
+                option.textContent = album.title;
+                select.appendChild(option);
+            });
+        }
+
+        function showAlbum(albumId) {
+            if (!albumId) return;
+            selectedAlbumId = albumId;
+            const album = albums.find(a => a.id == albumId);
+            const embedContainer = document.getElementById("embed-container");
+            embedContainer.innerHTML = `
+                <h4>${album.title} by ${album.artist}</h4>
+                <img src="${album.albumArt}" style="width:100%; max-width:300px; border-radius:5px; margin:10px 0;">
+                <iframe src="${album.embeds.spotify}" width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                <iframe src="${album.embeds.apple}" width="100%" height="500" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                <iframe src="${album.embeds.youtube}" width="100%" height="500" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            `;
+            showPlaylist(albumId);
+            trackEvent('Album', 'Select', album.title);
+        }
+
+        function trackEvent(category, action, label, value) {
+            gtag('event', action, {
+                'event_category': category,
+                'event_label': label,
+                'value': value
+            });
+        }
+
+        // Initialize music player
+        populateDropdown();
+        // Show first album by default
+        if (albums.length > 0) {
+            document.getElementById("album-select").value = albums[0].id;
+            showAlbum(albums[0].id);
+        }
+    </script>
+
+</body>
+
+</html>
