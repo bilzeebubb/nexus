@@ -165,7 +165,7 @@ function draw() {
             let canvas = createCanvas(600, 400);
             canvas.parent('phyllotaxis-canvas');
             background(0); // Black background
-            frameRate(30); // Animation speed
+            frameRate(1000); // Animation speed
         }
     
         function draw() {
@@ -185,7 +185,7 @@ function draw() {
                 let y = radius * sin(angle);
     
                 // Draw the point with a color based on pattern index
-                let colors = ['#ff6b6b', '#4ecdc4', '#45b7d1']; // Red, teal, blue
+                let colors = ['#D22B2B', '#6495ED', '#FDDA0D']; // Red, blue, yellow
                 fill(colors[i]);
                 noStroke();
                 ellipse(x, y, 5, 5); // Small circle for each point
@@ -197,7 +197,7 @@ function draw() {
             }
     
             // Stop after a certain number of points per pattern
-            if (n[0] > 500) {
+            if (n[0] > 10000) {
                 noLoop();
             }
         }
