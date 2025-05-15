@@ -6,183 +6,145 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="/nexus/img/favicon-32x32.png">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
-        body {
-            font-family: "Lato", sans-serif;
+        :root {
+            --navbar-height: 64px; /* Tailwind default height */
         }
 
-        .mySlides {
-            display: none;
+        /* Content section styling */
+        .content-section {
+            background: rgba(0, 0, 0, 0.85); /* Semi-transparent black */
         }
 
-        select {
-            background: #1a1a1a;
-            color: white;
-            border: 1px solid #333;
-            padding: 10px;
-            border-radius: 5px;
-            width: 100%;
-            max-width: 300px;
-            font-size: 16px;
-        }
-
-        select option {
-            background: #1a1a1a;
-            color: white;
-        }
-
-        .embed-container {
-            margin-top: 20px;
-            padding: 10px;
-            background: #ffffff;
-            border-radius: 5px;
-        }
-
-        .track-item {
+        /* Album card styles */
+        .album-card {
             cursor: pointer;
-            padding: 10px;
-            margin: 5px 0;
-            border-radius: 5px;
-            transition: background 0.2s ease;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
 
-        .track-item:hover {
-            background: #333;
+        .album-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(165, 180, 252, 0.3); /* Indigo-300 shadow */
         }
 
-        @media screen and (max-width: 600px) {
-            .playlist-sidebar {
-                margin-top: 20px;
-                border-left: none;
-                border-top: 1px solid #333;
-            }
+        .album-card img {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Embed container */
+        .embed-container {
+            background: #1a1a1a;
+            padding: 16px;
+        }
+
+        .embed-container iframe {
+            width: 100%;
         }
     </style>
 </head>
 
-<body>
-
+<body class="bg-black text-white font-sans">
     <!-- Navbar -->
-    <div class="w3-top">
-        <div class="w3-bar w3-black w3-card">
-            <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right"
-                href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i
-                    class="fa fa-bars"></i></a>
-            <a href="index.html" class="w3-bar-item w3-button w3-padding-large">HOME</a>
-            <a href="music.html" class="w3-bar-item w3-button w3-padding-large">MUSIC</a>
-            <a href="art.html" class="w3-bar-item w3-button w3-padding-large">ART</a>
-            <a href="code.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small">CODE</a>
-            <a href="videos.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small">VIDEOS</a>
-            <a href="#extras" class="w3-bar-item w3-button w3-padding-large w3-hide-small">EXTRAS</a>
-            <a href="#contact" class="w3-bar-item w3-button w3-padding-large w3-hide-small">CONTACT</a>
-            <a href="javascript:void(0)" class="w3-padding-large w3-hover-white w3-hide-small w3-right"><i
-                    class="fa fa-search"></i></a>
-        </div>
-    </div>
-
-    <!-- Navbar on small screens -->
-    <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
-        <a href="code.html" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">CODE</a>
-        <a href="videos.html" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">VIDEOS</a>
-        <a href="#extras" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">EXTRAS</a>
-    </div> 
-
-    <!-- Page content -->
-    <div class="w3-content" style="max-width:2000px;margin-top:46px">
-
-        <!-- Automatic Slideshow Images -->
-        <div class="mySlides w3-display-container w3-center w3-black">
-            <img src="/nexus/img/9 (9).jpg" style="width:52%">
-            <div class="w3-display-bottommiddle w3-container w3-text-white w3-padding-32 w3-hide-small">
-                <h3>The Saint's Mouth Bleeds, So The Sinner's Mouth Can Gleam</h3>
-                <p><b>Available on all platforms</b></p>
+    <nav class="fixed top-0 left-0 w-full bg-gray-900 shadow-lg z-50 h-16">
+        <div class="container mx-auto px-4 h-full flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <a href="index.html" class="text-xl font-bold hover:text-indigo-400 transition">Nexus</a>
+                <div class="hidden md:flex space-x-4">
+                    <a href="music.html" class="hover:text-indigo-400 transition">Music</a>
+                    <a href="art.html" class="hover:text-indigo-400 transition">Art</a>
+                    <a href="code.html" class="hover:text-indigo-400 transition">Code</a>
+                    <a href="videos.html" class="hover:text-indigo-400 transition">Videos</a>
+                    <a href="#extras" class="hover:text-indigo-400 transition">Extras</a>
+                    <a href="#contact" class="hover:text-indigo-400 transition">Contact</a>
+                </div>
+            </div>
+            <button id="menu-toggle" class="md:hidden text-2xl focus:outline-none">
+                <i class="fa fa-bars"></i>
+            </button>
+            <div class="hidden md:block">
+                <a href="javascript:void(0)" class="text-xl hover:text-indigo-400 transition">
+                    <i class="fa fa-search"></i>
+                </a>
             </div>
         </div>
-        <div class="mySlides w3-display-container w3-center w3-black">
-            <img src="/nexus/img/ps.jpg" style="width:52%">
-            <div class="w3-display-bottommiddle w3-container w3-text-white w3-padding-32 w3-hide-small">
-                <h3>PROJECT SUNSHINE</h3>
-                <p><b>Scrapped Project</b></p>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-900">
+            <div class="flex flex-col space-y-2 px-4 py-4">
+                <a href="code.html" class="hover:text-indigo-400 transition">Code</a>
+                <a href="videos.html" class="hover:text-indigo-400 transition">Videos</a>
+                <a href="#extras" class="hover:text-indigo-400 transition">Extras</a>
             </div>
         </div>
-        <div class="mySlides w3-display-container w3-center w3-black">
-            <img src="/nexus/img/space.jpg" style="width:52%">
-            <div class="w3-display-bottommiddle w3-container w3-text-white w3-padding-32 w3-hide-small">
-                <h3>Edge of Nowhere</h3>
-                <p><b>Available on all platforms</b></p>
-            </div>
-        </div>
-        <div class="mySlides w3-display-container w3-center w3-black">
-            <img src="/nexus/img/UFO.png" style="width:52%">
-            <div class="w3-display-bottommiddle w3-container w3-text-white w3-padding-32 w3-hide-small">
-                <h3>encounters</h3>
-                <p><b>Available on all platforms</b></p>
-            </div>
-        </div>
+    </nav>
 
-        <!-- The Music Section -->
-        <div class="w3-container w3-content w3-padding-64 w3-center" style="max-width:1200px" id="music">
-            <h2 class="w3-wide w3-center">bilzeebub</h2>
-            <p class="w3-opacity w3-center"><i>Music is the language of God, math is the syntax.</i></p>
-                    <select id="album-select" onchange="showAlbum(this.value)">
-                        <option value="" disabled selected>-</option>
-                    </select>
-                    <div id="embed-container" class="embed-container w3-center"></div>
-                <div class="l4 m12 w3-center"></div>
-        </div>
-
-        <!-- End Page Content -->
-    </div>
+    <!-- Main Content -->
+    <main class="w-full pt-24 pb-8">
+        <!-- Album Cards Section -->
+        <section class="content-section px-4 py-12">
+            <div class="container mx-auto max-w-4xl">
+                <h2 class="text-2xl font-semibold mb-2">bilzeebub</h2>
+                <p class="text-gray-400 italic mb-6">Music is the language of God, math is the syntax.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                    <div class="album-card" onclick="showAlbum(1)">
+                        <img src="/nexus/img/takestime.jpg" alt="It Takes Time Album Cover">
+                        <h3 class="text-lg font-semibold mt-2">It Takes Time</h3>
+                        <p class="text-gray-400 text-sm">Available on all platforms</p>
+                    </div>
+                    <div class="album-card" onclick="showAlbum(2)">
+                        <img src="/nexus/img/9 (9).jpg" alt="The Saint's Mouth Bleeds Album Cover">
+                        <h3 class="text-lg font-semibold mt-2">The Saint's Mouth Bleeds</h3>
+                        <p class="text-gray-400 text-sm">Available on all platforms</p>
+                    </div>
+                    <div class="album-card" onclick="showAlbum(3)">
+                        <img src="/nexus/img/space.jpg" alt="Edge of Nowhere Album Cover">
+                        <h3 class="text-lg font-semibold mt-2">Edge of Nowhere</h3>
+                        <p class="text-gray-400 text-sm">Available on all platforms</p>
+                    </div>
+                    <div class="album-card" onclick="showAlbum(4)">
+                        <img src="/nexus/img/UFO.png" alt="Encounters Album Cover">
+                        <h3 class="text-lg font-semibold mt-2">encounters</h3>
+                        <p class="text-gray-400 text-sm">Available on all platforms</p>
+                    </div>
+                </div>
+                <div id="embed-container" class="embed-container"></div>
+            </div>
+        </section>
+    </main>
 
     <!-- Footer -->
-    <footer class="w3-container w3-padding-64 w3-center w3-opacity w3-light-grey w3-xlarge">
-        <i class="fa fa-facebook-official w3-hover-opacity"></i>
-        <i class="fa fa-instagram w3-hover-opacity"></i>
-        <i class="fa fa-twitter w3-hover-opacity"></i>
-        <p class="w3-medium">The Nexus</p>
+    <footer class="content-section px-4 py-12 text-center">
+        <div class="flex justify-center space-x-6 mb-4">
+            <a href="#" class="text-2xl hover:text-indigo-400 transition"><i class="fa fa-facebook-official"></i></a>
+            <a href="#" class="text-2xl hover:text-indigo-400 transition"><i class="fa fa-instagram"></i></a>
+            <a href="#" class="text-2xl hover:text-indigo-400 transition"><i class="fa fa-twitter"></i></a>
+        </div>
+        <p class="text-gray-400">The Nexus</p>
     </footer>
 
+    <!-- Scripts -->
     <script>
-        // Automatic Slideshow - change image every 4 seconds
-        var myIndex = 0;
-        carousel();
+        // Navbar Toggle
+        document.getElementById('menu-toggle').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
 
-        function carousel() {
-            var i;
-            var x = document.getElementsByClassName("mySlides");
-            for (i = 0; i < x.length; i++) {
-                x[i].style.display = "none";
-            }
-            myIndex++;
-            if (myIndex > x.length) { myIndex = 1 }
-            x[myIndex - 1].style.display = "block";
-            setTimeout(carousel, 4000);
-        }
-
-        // Navbar toggle for small screens
-        function myFunction() {
-            var x = document.getElementById("navDemo");
-            if (x.className.indexOf("w3-show") == -1) {
-                x.className += " w3-show";
-            } else {
-                x.className = x.className.replace(" w3-show", "");
-            }
-        }
-
-        // Music Player Logic
+        // Album Data
         const albums = [
             {
                 id: 1,
                 title: "It Takes Time",
                 artist: "bilzeebub",
                 albumArt: "/nexus/img/takestime.jpg",
+                status: "Available on all platforms",
                 embeds: {
                     spotify: "https://open.spotify.com/embed/album/7s3oAOeQi5PZ2BfKm8Ub8p?utm_source=generator&theme=0",
-                    apple: "https://embed.music.apple.com/us/album/it-takes-time/1781948906", // Replace with actual embed
-                    youtube: "https://www.youtube.com/embed/videoseries?si=BMavNrVg96CsMnFO&amp;list=OLAK5uy_le8O5-dd76oBKlYmEw-Z4w9hcJiaMeJiE"
+                    apple: "https://embed.music.apple.com/us/album/it-takes-time/1781948906",
+                    youtube: "https://www.youtube.com/embed/videoseries?si=BMavNrVg96CsMnFO&list=OLAK5uy_le8O5-dd76oBKlYmEw-Z4w9hcJiaMeJiE"
                 },
             },
             {
@@ -190,9 +152,10 @@
                 title: "The Saint's Mouth Bleeds",
                 artist: "bilzeebub",
                 albumArt: "/nexus/img/9 (9).jpg",
+                status: "Available on all platforms",
                 embeds: {
                     spotify: "https://open.spotify.com/embed/album/2CepuWwtImRMW3Pec2IgYz?utm_source=generator&theme=0",
-                    apple: "https://embed.music.apple.com/us/album/the-saints-mouth-bleeds-so-the-sinners-mouth-can/1758577742", // Replace with actual embed
+                    apple: "https://embed.music.apple.com/us/album/the-saints-mouth-bleeds-so-the-sinners-mouth-can/1758577742",
                     youtube: "https://www.youtube.com/embed/FdtPRc_tUIk?si=WdmY_WCCRDOy3h-M"
                 },
             },
@@ -201,9 +164,10 @@
                 title: "Edge of Nowhere",
                 artist: "bilzeebub",
                 albumArt: "/nexus/img/space.jpg",
+                status: "Available on all platforms",
                 embeds: {
                     spotify: "https://open.spotify.com/embed/album/45zUHDMjnyd7YlPHaNCOqI?utm_source=generator&theme=0",
-                    apple: "https://embed.music.apple.com/us/album/the-edge-of-nowhere-single/1733413116", // Replace with actual embed
+                    apple: "https://embed.music.apple.com/us/album/the-edge-of-nowhere-single/1733413116",
                     youtube: "https://www.youtube.com/embed/ev4e7JPcOKA?si=8XNvDtFllLiuN4_l"
                 },
             },
@@ -212,70 +176,43 @@
                 title: "encounters",
                 artist: "bilzeebub",
                 albumArt: "/nexus/img/UFO.png",
+                status: "Available on all platforms",
                 embeds: {
                     spotify: "https://open.spotify.com/embed/album/6tX8MxyAp9Kl051u7Aovs8?utm_source=generator&theme=0",
-                    apple: "https://embed.music.apple.com/us/album/encounters-single/1757970176", // Replace with actual embed
+                    apple: "https://embed.music.apple.com/us/album/encounters-single/1757970176",
                     youtube: "https://www.youtube.com/embed/ZD2NbnmDSE0?si=Hz27gk_J8CLlZ9LG"
                 },
             },
-
         ];
 
-        let selectedAlbumId = null;
-
-        function populateDropdown() {
-            const select = document.getElementById("album-select");
-            albums.forEach(album => {
-                const option = document.createElement("option");
-                option.value = album.id;
-                option.textContent = album.title;
-                select.appendChild(option);
-            });
-        }
-
+        // Show Album Embeds
         function showAlbum(albumId) {
-            if (!albumId) return;
-            selectedAlbumId = albumId;
             const album = albums.find(a => a.id == albumId);
             const embedContainer = document.getElementById("embed-container");
             embedContainer.innerHTML = `
-                <h4>${album.title} by ${album.artist}</h4>
-                <img src="${album.albumArt}" style="width:100%; max-width:300px; border-radius:5px; margin:10px 0;">
-                <iframe src="${album.embeds.spotify}" width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-                <iframe src="${album.embeds.apple}" width="100%" height="500" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                <h4 class="text-xl font-semibold mb-4">${album.title} by ${album.artist}</h4>
+                <img src="${album.albumArt}" alt="${album.title} Album Cover" class="w-full max-w-xs mb-4">
+                <iframe src="${album.embeds.spotify}" width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted-media" class="mb-4"></iframe>
+                <iframe src="${album.embeds.apple}" width="100%" height="500" frameborder="0" allowtransparency="true" allow="encrypted-media" class="mb-4"></iframe>
                 <iframe src="${album.embeds.youtube}" width="100%" height="500" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
             `;
-            showPlaylist(albumId);
-            trackEvent('Album', 'Select', album.title);
         }
 
-        function trackEvent(category, action, label, value) {
-            gtag('event', action, {
-                'event_category': category,
-                'event_label': label,
-                'value': value
-            });
-        }
-
-        // Initialize music player
-        populateDropdown();
-        // Show first album by default
+        // Initialize with first album
         if (albums.length > 0) {
-            document.getElementById("album-select").value = albums[0].id;
             showAlbum(albums[0].id);
         }
 
-        // Used to toggle the menu on small screens when clicking on the menu button
-        function myFunction() {
-            var x = document.getElementById("navDemo");
-            if (x.className.indexOf("w3-show") == -1) {
-                x.className += " w3-show";
-            } else {
-                x.className = x.className.replace(" w3-show", "");
-            }
-        }
+        // Keyboard Accessibility for Cards
+        document.querySelectorAll('.album-card').forEach(card => {
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    card.click();
+                }
+            });
+        });
     </script>
-
 </body>
 
 </html>

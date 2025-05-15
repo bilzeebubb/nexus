@@ -6,85 +6,191 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="/nexus/img/favicon-32x32.png">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        :root {
+            --navbar-height: 64px; /* Tailwind default height */
+        }
+
+        /* Ensure content section matches code.html styling */
+        .content-section {
+            background: rgba(0, 0, 0, 0.85); /* Semi-transparent black for contrast */
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            overflow: auto;
+        }
+
+        .modal img {
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: #a5b4fc; /* Indigo-300 */
+        }
+    </style>
 </head>
 
-<body>
+<body class="bg-black text-white font-sans">
     <!-- Navbar -->
-    <div class="w3-top">
-        <div class="w3-bar w3-black w3-card">
-            <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right"
-                href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i
-                    class="fa fa-bars"></i></a>
-            <a href="index.html" class="w3-bar-item w3-button w3-padding-large">HOME</a>
-            <a href="music.html" class="w3-bar-item w3-button w3-padding-large">MUSIC</a>
-            <a href="art.html" class="w3-bar-item w3-button w3-padding-large">ART</a>
-            <a href="code.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small">CODE</a>
-            <a href="videos.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small">VIDEOS</a>
-            <a href="#extras" class="w3-bar-item w3-button w3-padding-large w3-hide-small">EXTRAS</a>
-            <a href="#contact" class="w3-bar-item w3-button w3-padding-large w3-hide-small">CONTACT</a>
-            <a href="javascript:void(0)" class="w3-padding-large w3-hover-white w3-hide-small w3-right"><i
-                    class="fa fa-search"></i></a>
+    <nav class="fixed top-0 left-0 w-full bg-gray-900 shadow-lg z-50 h-16">
+        <div class="container mx-auto px-4 h-full flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <a href="index.html" class="text-xl font-bold hover:text-indigo-400 transition">Nexus</a>
+                <div class="hidden md:flex space-x-4">
+                    <a href="music.html" class="hover:text-indigo-400 transition">Music</a>
+                    <a href="art.html" class="hover:text-indigo-400 transition">Art</a>
+                    <a href="code.html" class="hover:text-indigo-400 transition">Code</a>
+                    <a href="videos.html" class="hover:text-indigo-400 transition">Videos</a>
+                    <a href="#extras" class="hover:text-indigo-400 transition">Extras</a>
+                    <a href="#contact" class="hover:text-indigo-400 transition">Contact</a>
+                </div>
+            </div>
+            <button id="menu-toggle" class="md:hidden text-2xl focus:outline-none">
+                <i class="fa fa-bars"></i>
+            </button>
+            <div class="hidden md:block">
+                <a href="javascript:void(0)" class="text-xl hover:text-indigo-400 transition">
+                    <i class="fa fa-search"></i>
+                </a>
+            </div>
         </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-900">
+            <div class="flex flex-col space-y-2 px-4 py-4">
+                <a href="code.html" class="hover:text-indigo-400 transition">Code</a>
+                <a href="videos.html" class="hover:text-indigo-400 transition">Videos</a>
+                <a href="#extras" class="hover:text-indigo-400 transition">Extras</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="px-4 pt-24 pb-8 w-full">
+        <!-- Photo Grid Section -->
+        <section class="content-section rounded-lg p-6">
+            <h2 class="text-2xl font-semibold mb-4">Art Gallery</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                <!-- Column 1 -->
+                <div class="flex flex-col">
+                    <img src="/nexus/img/akipencil.jpg" alt="Aki Pencil" class="w-full h-auto cursor-pointer" onclick="openModal(this.src, this.alt)">
+                    <img src="/nexus/img/concentration.jpg" alt="Concentration" class="w-full h-auto cursor-pointer" onclick="openModal(this.src, this.alt)">
+                    <img src="/nexus/img/creation.jpg" alt="Creation" class="w-full h-auto cursor-pointer" onclick="openModal(this.src, this.alt)">
+                    <img src="/nexus/img/exo-dab.jpg" alt="Concentration" class="w-full h-auto cursor-pointer" onclick="openModal(this.src, this.alt)">
+                    <img src="/nexus/img/shambo.jpg" alt="Shambo" class="w-full h-auto cursor-pointer" onclick="openModal(this.src, this.alt)">
+                    <img src="/nexus/img/caterwillar.jpg" alt="Caterwillar" class="w-full h-auto cursor-pointer" onclick="openModal(this.src, this.alt)">
+                </div>
+                <!-- Column 2 -->
+                <div class="flex flex-col">
+                    <img src="/nexus/img/ich.jpg" alt="Ich" class="w-full h-auto cursor-pointer" onclick="openModal(this.src, this.alt)">
+                    <img src="/nexus/img/mfnihon.jpg" alt="MF Nihon" class="w-full h-auto cursor-pointer" onclick="openModal(this.src, this.alt)">
+                    <img src="/nexus/img/rebuilt.jpg" alt="Rebuilt" class="w-full h-auto cursor-pointer" onclick="openModal(this.src, this.alt)">
+                    <img src="/nexus/img/mind-blown.jpg" alt="Mind Blown" class="w-full h-auto cursor-pointer" onclick="openModal(this.src, this.alt)">
+                    <img src="/nexus/img/woah.jpg" alt="Woah" class="w-full h-auto cursor-pointer" onclick="openModal(this.src, this.alt)">
+                    <img src="/nexus/img/flower2.jpg" alt="Flower 2" class="w-full h-auto cursor-pointer" onclick="openModal(this.src, this.alt)">
+                </div>
+                <!-- Column 3 -->
+                <div class="flex flex-col">
+                    <img src="/nexus/img/fib.jpg" alt="Fib" class="w-full h-auto cursor-pointer" onclick="openModal(this.src, this.alt)">
+                    <img src="/nexus/img/kab.jpg" alt="Kab" class="w-full h-auto cursor-pointer" onclick="openModal(this.src, this.alt)">
+                    <img src="/nexus/img/messy.jpg" alt="Messy" class="w-full h-auto cursor-pointer" onclick="openModal(this.src, this.alt)">
+                    <img src="/nexus/img/rebuilt.jpg" alt="Rebuilt" class="w-full h-auto cursor-pointer" onclick="openModal(this.src, this.alt)">
+                    <img src="/nexus/img/tab.jpg" alt="Tab" class="w-full h-auto cursor-pointer" onclick="openModal(this.src, this.alt)">
+                    <img src="/nexus/img/squig.jpg" alt="Squig" class="w-full h-auto cursor-pointer" onclick="openModal(this.src, this.alt)">
+                </div>
+                <!-- Column 4 -->
+                <div class="flex flex-col">
+                    <img src="/nexus/img/lorax.jpg" alt="Lorax" class="w-full h-auto cursor-pointer" onclick="openModal(this.src, this.alt)">
+                    <img src="/nexus/img/fibdir.jpg" alt="Fib Dir" class="w-full h-auto cursor-pointer" onclick="openModal(this.src, this.alt)">
+                    <img src="/nexus/img/goblin.jpg" alt="Goblin" class="w-full h-auto cursor-pointer" onclick="openModal(this.src, this.alt)">
+                    <img src="/nexus/img/flower.jpg" alt="Flower" class="w-full h-auto cursor-pointer" onclick="openModal(this.src, this.alt)">
+                    <img src="/nexus/img/bethou.jpg" alt="Be Thou" class="w-full h-auto cursor-pointer" onclick="openModal(this.src, this.alt)">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal -->
+    <div id="image-modal" class="modal">
+        <span class="modal-close">&times;</span>
+        <img id="modal-image" src="" alt="">
     </div>
 
-    <!-- Navbar on small screens -->
-    <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
-        <a href="code.html" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">CODE</a>
-        <a href="videos.html" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">VIDEOS</a>
-        <a href="#extras" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">EXTRAS</a>
-    </div> 
-
-    <!-- Photo Grid -->
-    <div class="w3-row m12" style="margin-top: 60px;">
-        <div class="w3-quarter">
-            <img src="/nexus/img/akipencil.jpg" style="width:100%">
-            <img src="/nexus/img/concentration.jpg" style="width:100%">
-            <img src="/nexus/img/creation.jpg" style="width:100%">
-            <img src="/nexus/img/exo-dab.jpg" style="width:100%">
-            <img src="/nexus/img/shambo.jpg" style="width:100%">
-            <img src="/nexus/img/caterwillar.jpg" style="width:100%">
+        <!-- Footer -->
+    <footer class="content-section px-4 py-12 text-center">
+        <div class="flex justify-center space-x-6 mb-4">
+            <a href="#" class="text-2xl hover:text-indigo-400 transition"><i class="fa fa-facebook-official"></i></a>
+            <a href="#" class="text-2xl hover:text-indigo-400 transition"><i class="fa fa-instagram"></i></a>
+            <a href="#" class="text-2xl hover:text-indigo-400 transition"><i class="fa fa-twitter"></i></a>
         </div>
+        <p class="text-gray-400">The Nexus</p>
+    </footer>
 
-        <div class="w3-quarter">
-            <img src="/nexus/img/ich.jpg" style="width:100%">
-            <img src="/nexus/img/mfnihon.jpg" style="width:100%">
-            <img src="/nexus/img/rebuilt.jpg" style="width:100%">
-            <img src="/nexus/img/mind-blown.jpg" style="width:100%">
-            <img src="/nexus/img/woah.jpg" style="width:100%">
-            <img src="/nexus/img/flower2.jpg" style="width:100%">
-        </div>
-
-        <div class="w3-quarter">
-            <img src="/nexus/img/fib.jpg" style="width:100%">
-            <img src="/nexus/img/kab.jpg" style="width:100%">
-            <img src="/nexus/img/messy.jpg" style="width:100%">
-            <img src="/nexus/img/rebuilt.jpg" style="width:100%">
-            <img src="/nexus/img/tab.jpg" style="width:100%">
-            <img src="/nexus/img/squig.jpg" style="width:100%">
-        </div>
-
-        <div class="w3-quarter">
-            <img src="/nexus/img/lorax.jpg" style="width:100%">
-            <img src="/nexus/img/fibdir.jpg" style="width:100%">
-            <img src="/nexus/img/goblin.jpg" style="width:100%">
-            <img src="/nexus/img/flower.jpg" style="width:100%">
-            <img src="/nexus/img/bethou.jpg" style="width:100%">
-        </div>
-    </div>
-
+    <!-- Scripts -->
     <script>
-        // Used to toggle the menu on small screens when clicking on the menu button
-        function myFunction() {
-            var x = document.getElementById("navDemo");
-            if (x.className.indexOf("w3-show") == -1) {
-                x.className += " w3-show";
-            } else {
-                x.className = x.className.replace(" w3-show", "");
-            }
+        // Navbar Toggle
+        document.getElementById('menu-toggle').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Modal Functionality
+        const modal = document.getElementById('image-modal');
+        const modalImage = document.getElementById('modal-image');
+        const closeModal = document.querySelector('.modal-close');
+
+        function openModal(src, alt) {
+            modalImage.src = src;
+            modalImage.alt = alt;
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
         }
+
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        });
+
+        // Close modal when clicking outside the image
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.style.display === 'flex') {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
     </script>
 </body>
 

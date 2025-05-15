@@ -6,115 +6,152 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="/nexus/img/favicon-32x32.png">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Prism.js for syntax highlighting -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />
-    <!-- p5.js for Fibonacci visualization -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.2/p5.min.js"></script>
+    <style>
+        :root {
+            --navbar-height: 64px; /* Tailwind default height */
+        }
+
+        #phyllotaxis-canvas {
+            position: fixed;
+            top: var(--navbar-height);
+            left: 0;
+            width: 100%;
+            height: calc(100dvh - var(--navbar-height));
+            z-index: -1; /* Ensure canvas is behind all content */
+            pointer-events: none; /* Prevent canvas from capturing mouse events */
+        }
+
+        /* Ensure content is readable over canvas */
+        .content-section {
+            background: rgba(0, 0, 0, 0.85); /* Semi-transparent black for contrast */
+            backdrop-filter: blur(4px); /* Subtle blur for modern look */
+        }
+    </style>
 </head>
 
-<body>
+<body class="bg-black text-white font-sans">
     <!-- Navbar -->
-    <div class="w3-top">
-        <div class="w3-bar w3-black w3-card">
-            <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right"
-                href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i
-                    class="fa fa-bars"></i></a>
-            <a href="index.html" class="w3-bar-item w3-button w3-padding-large">HOME</a>
-            <a href="music.html" class="w3-bar-item w3-button w3-padding-large">MUSIC</a>
-            <a href="art.html" class="w3-bar-item w3-button w3-padding-large">ART</a>
-            <a href="code.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small">CODE</a>
-            <a href="videos.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small">VIDEOS</a>
-            <a href="#extras" class="w3-bar-item w3-button w3-padding-large w3-hide-small">EXTRAS</a>
-            <a href="#contact" class="w3-bar-item w3-button w3-padding-large w3-hide-small">CONTACT</a>
-            <a href="javascript:void(0)" class="w3-padding-large w3-hover-white w3-hide-small w3-right"><i
-                    class="fa fa-search"></i></a>
+    <nav class="fixed top-0 left-0 w-full bg-gray-900 shadow-lg z-50 h-16">
+        <div class="container mx-auto px-4 h-full flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <a href="index.html" class="text-xl font-bold hover:text-indigo-400 transition">Nexus</a>
+                <div class="hidden md:flex space-x-4">
+                    <a href="music.html" class="hover:text-indigo-400 transition">Music</a>
+                    <a href="art.html" class="hover:text-indigo-400 transition">Art</a>
+                    <a href="code.html" class="hover:text-indigo-400 transition">Code</a>
+                    <a href="videos.html" class="hover:text-indigo-400 transition">Videos</a>
+                    <a href="#extras" class="hover:text-indigo-400 transition">Extras</a>
+                    <a href="#contact" class="hover:text-indigo-400 transition">Contact</a>
+                </div>
+            </div>
+            <button id="menu-toggle" class="md:hidden text-2xl focus:outline-none">
+                <i class="fa fa-bars"></i>
+            </button>
+            <div class="hidden md:block">
+                <a href="javascript:void(0)" class="text-xl hover:text-indigo-400 transition">
+                    <i class="fa fa-search"></i>
+                </a>
+            </div>
         </div>
-    </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-900">
+            <div class="flex flex-col space-y-2 px-4 py-4">
+                <a href="code.html" class="hover:text-indigo-400 transition">Code</a>
+                <a href="videos.html" class="hover:text-indigo-400 transition">Videos</a>
+                <a href="#extras" class="hover:text-indigo-400 transition">Extras</a>
+            </div>
+        </div>
+    </nav>
 
-    <!-- Navbar on small screens -->
-    <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
-        <a href="code.html" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">CODE</a>
-        <a href="videos.html" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">VIDEOS</a>
-        <a href="#extras" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">EXTRAS</a>
-    </div> 
+    <!-- Canvas for Phyllotaxis -->
+    <canvas id="phyllotaxis-canvas"></canvas>
 
-    <!-- Code Display Section -->
-    <div class="w3-container w3-content" style="max-width: 1200px; margin-top: 80px;" id="code">
-        <!-- Code Snippet Section -->
-
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 pt-24 pb-8">
         <!-- GitHub Repositories Section -->
-        <div class="w3-row-padding w3-margin-bottom">
-            <div class="w3-col l12">
-                <h2 class="w3-text-white w3-padding">My GitHub Repositories</h2>
-                <div class="w3-row" id="repos">
-                    <!-- Repos will be populated by JavaScript -->
-                </div>
+        <section class="content-section rounded-lg p-6 mb-8">
+            <h2 class="text-2xl font-semibold mb-4">My GitHub Repositories</h2>
+            <div id="repos" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Repos will be populated by JavaScript -->
             </div>
-        </div>
+        </section>
 
-        <div class="w3-row-padding w3-margin-bottom">
-            <div class="w3-col l12">
-                <h2 class="w3-text-white w3-padding">Code Snippets</h2>
-                <div class="w3-card-4 w3-black w3-padding">
-                    <h3 class="w3-text-light-grey">p5.js Phyllotaxis Visualization</h3>
-                    <pre><code class="language-python">
-let n = 0; // Counter for points
-const goldenAngle = 137.5; // Golden angle in degrees (approx 360 * (1 - 1/phi))
-const scale = 4; // Scale factor for spacing
+        <!-- Code Snippets Section -->
+        <!-- <section class="content-section rounded-lg p-6 mb-8">
+            <h2 class="text-2xl font-semibold mb-4">Code Snippets</h2>
+            <div class="bg-gray-800 rounded-lg p-4">
+                <h3 class="text-xl text-gray-300 mb-2">Interactive Phyllotaxis Visualization</h3>
+                <pre><code class="language-javascript">
+const canvas = document.getElementById('phyllotaxis-canvas');
+const ctx = canvas.getContext('2d');
+const goldenAngle = 137.5 * Math.PI / 180;
+let n = [0, 0, 0];
+let scale = 4;
+let mouseX = 0, mouseY = 0;
+const offsets = [-200, 0, 200];
 
-function setup() {
-    let canvas = createCanvas(300, 300);
-    canvas.parent('phyllotaxis-canvas');
-    background(0); // Black background
-    frameRate(60); // Control animation speed
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight - 64;
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
-function draw() {
-    // Center the drawing
-    translate(width / 2, height / 2);
-
-    // Add a new point each frame
-    let angle = radians(n * goldenAngle); // Convert golden angle to radians
-    let radius = scale * sqrt(n); // Distance from center increases with sqrt(n)
-
-    // Calculate position using polar coordinates
-    let x = radius * cos(angle);
-    let y = radius * sin(angle);
-
-    // Draw the point (small circle)
-    fill(255); // White points
-    noStroke();
-    ellipse(x, y, 5, 5); // Small circle for each point
-
-    n++; // Increment point counter
-
-    // Optional: Stop after a certain number of points
-    if (n > 800) {
-        noLoop();
+function draw(t) {
+    scale = 4 + Math.sin(t / 1000) * 0.5;
+    for (let i = 0; i < 3; i++) {
+        const angle = n[i] * goldenAngle;
+        const radius = scale * Math.sqrt(n[i]);
+        const mouseOffsetX = (mouseX - canvas.width / 2) * 0.02;
+        const mouseOffsetY = (mouseY - canvas.height / 2) * 0.02;
+        const x = canvas.width / 2 + offsets[i] + radius * Math.cos(angle) + mouseOffsetX;
+        const y = canvas.height / 2 + radius * Math.sin(angle) + mouseOffsetY;
+        ctx.beginPath();
+        ctx.arc(x, y, 3 + Math.sin(t / 500 + i) * 2, 0, 2 * Math.PI);
+        const hue = (t / 50 + i * 120) % 360;
+        ctx.fillStyle = `hsl(${hue}, 70%, 60%)`;
+        ctx.fill();
+        n[i]++;
     }
+    if (n[0] <= 5000) requestAnimationFrame(drawFrame);
 }
-                    </code></pre>
-                    <button class="w3-button w3-light-grey w3-margin-top" onclick="copyCode()">Copy Code</button>
-                </div>
-            </div>
-        </div>
 
+function drawFrame(t) { draw(t); }
 
-        <!-- Phyllotaxis Visualization Section -->
-        <div class="w3-row-padding w3-margin-bottom">
-            <div class="w3-col l12">
-                <h2 class="w3-text-white w3-padding">Golden Ratio Visualization</h2>
-                <div class="w3-card-4 w3-black w3-padding">
-                    <h3 class="w3-text-light-grey">Phyllotaxis Patterns</h3>
-                    <div id="phyllotaxis-canvas" class="w3-center"></div>
-                    <p class="w3-text-light-grey">An animated visualization of three phyllotaxis patterns using the golden angle (137.5°), creating natural spirals inspired by the golden ratio.</p>
-                </div>
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+window.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
+draw(0);
+                </code></pre>
+                <button class="mt-4 px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition" onclick="copyCode()">Copy Code</button>
             </div>
+        </section> -->
+
+        <!-- Phyllotaxis Visualization Description -->
+        <section class="content-section rounded-lg p-6">
+            <h2 class="text-2xl font-semibold mb-4">Golden Ratio Visualization</h2>
+            <div>
+                <h3 class="text-xl text-gray-300 mb-2">Interactive Phyllotaxis Patterns</h3>
+                <p class="text-gray-300">A hypnotic visualization of three phyllotaxis patterns using the golden angle (137.5°). The patterns pulse and shift subtly with mouse movement, creating natural spirals inspired by the golden ratio.</p>
+            </div>
+        </section>
+    </main>
+
+        <!-- Footer -->
+    <footer class="content-section px-4 py-12 text-center">
+        <div class="flex justify-center space-x-6 mb-4">
+            <a href="#" class="text-2xl hover:text-indigo-400 transition"><i class="fa fa-facebook-official"></i></a>
+            <a href="#" class="text-2xl hover:text-indigo-400 transition"><i class="fa fa-instagram"></i></a>
+            <a href="#" class="text-2xl hover:text-indigo-400 transition"><i class="fa fa-twitter"></i></a>
         </div>
-    </div>
+        <p class="text-gray-400">The Nexus</p>
+    </footer>
 
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
@@ -126,98 +163,107 @@ function draw() {
                 alert("Code copied to clipboard!");
             });
         }
-    
+
         // Fetch GitHub Repositories
-        fetch('https://api.github.com/users/bilzeebubb/repos')
-            .then(response => response.json())
-            .then(data => {
+        async function fetchRepos() {
+            try {
+                const response = await fetch('https://api.github.com/users/bilzeebubb/repos');
+                const data = await response.json();
                 const reposContainer = document.getElementById('repos');
                 data.slice(0, 3).forEach(repo => {
                     reposContainer.innerHTML += `
-                        <div class="w3-col l4 m6 s12 w3-margin-bottom">
-                            <div class="w3-card-4 w3-black w3-padding">
-                                <h4 class="w3-text-light-grey">${repo.name}</h4>
-                                <p class="w3-text-grey">${repo.description || 'No description available'}</p>
-                                <p class="w3-text-grey">
-                                    <i class="fa fa-star"></i> ${repo.stargazers_count} 
-                                    <i class="fa fa-code-fork"></i> ${repo.forks_count}
-                                </p>
-                                <a href="${repo.html_url}" target="_blank" class="w3-button w3-light-grey w3-margin-top">View on GitHub</a>
-                            </div>
+                        <div class="bg-gray-800 rounded-lg p-4 hover:shadow-lg transition">
+                            <h4 class="text-lg text-gray-300">${repo.name}</h4>
+                            <p class="text-gray-400 text-sm">${repo.description || 'No description available'}</p>
+                            <p class="text-gray-400 text-sm mt-2">
+                                <i class="fa fa-star"></i> ${repo.stargazers_count} 
+                                <i class="fa fa-code-fork"></i> ${repo.forks_count}
+                            </p>
+                            <a href="${repo.html_url}" target="_blank" class="mt-2 inline-block px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition">View on GitHub</a>
                         </div>`;
                 });
-            })
-            .catch(error => {
+            } catch (error) {
                 console.error('Error fetching repos:', error);
-                document.getElementById('repos').innerHTML = '<p class="w3-text-red">Failed to load repositories.</p>';
-            });
-    
-        // Navbar Toggle Function
-        function myFunction() {
-            var x = document.getElementById("navDemo");
-            if (x.className.indexOf("w3-show") == -1) {
-                x.className += " w3-show";
-            } else {
-                x.className = x.className.replace(" w3-show", "");
-            }
-        }
-    
-        // p5.js Phyllotaxis Visualization with Three Patterns
-        let n = [0, 0, 0]; // Array to track counters for three patterns
-        const goldenAngle = 137.5; // Golden angle in degrees
-        const scale = 4; // Scale factor for spacing
-        const offsets = [-200, 0, 200]; // Horizontal offsets for three patterns (left, center, right)
-    
-        function setup() {
-            let canvas = createCanvas(600, 400);
-            canvas.parent('phyllotaxis-canvas');
-            background(0); // Black background
-            frameRate(1000); // Animation speed
-        }
-    
-        function draw() {
-            // Clear previous frame to avoid overlap (optional, remove for trailing effect)
-            // background(0); // Uncomment to clear each frame, comment to show trails
-    
-            // Draw three phyllotaxis patterns
-            for (let i = 0; i < 3; i++) {
-                translate(width / 2 + offsets[i], height / 2); // Offset each pattern horizontally
-    
-                // Add a new point each frame
-                let angle = radians(n[i] * goldenAngle); // Convert golden angle to radians
-                let radius = scale * sqrt(n[i]); // Distance from center increases with sqrt(n)
-    
-                // Calculate position
-                let x = radius * cos(angle);
-                let y = radius * sin(angle);
-    
-                // Draw the point with a color based on pattern index
-                let colors = ['#D22B2B', '#6495ED', '#FDDA0D']; // Red, blue, yellow
-                fill(colors[i]);
-                noStroke();
-                ellipse(x, y, 5, 5); // Small circle for each point
-    
-                n[i]++; // Increment counter for this pattern
-    
-                // Reset transformation for next pattern
-                resetMatrix();
-            }
-    
-            // Stop after a certain number of points per pattern
-            if (n[0] > 10000) {
-                noLoop();
+                document.getElementById('repos').innerHTML = '<p class="text-red-400">Failed to load repositories.</p>';
             }
         }
 
-        // Used to toggle the menu on small screens when clicking on the menu button
-        function myFunction() {
-            var x = document.getElementById("navDemo");
-            if (x.className.indexOf("w3-show") == -1) {
-                x.className += " w3-show";
-            } else {
-                x.className = x.className.replace(" w3-show", "");
+        // Navbar Toggle
+        document.getElementById('menu-toggle').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Canvas Animation
+        const canvas = document.getElementById('phyllotaxis-canvas');
+        const ctx = canvas.getContext('2d');
+        const goldenAngle = 137.5 * Math.PI / 180;
+        let n = [0, 0, 0];
+        let scale = 4;
+        let mouseX = 0, mouseY = 0;
+        const offsets = [-200, 0, 200];
+        let animationFrameId;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight - 64;
+            ctx.fillStyle = 'black';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function draw(t) {
+            // Pulse scale with sine wave for hypnotic effect
+            scale = 4 + Math.sin(t / 1000) * 0.5;
+            for (let i = 0; i < 3; i++) {
+                const angle = n[i] * goldenAngle;
+                const radius = scale * Math.sqrt(n[i]);
+                // Subtle mouse interaction
+                const mouseOffsetX = (mouseX - canvas.width / 2) * 0.02;
+                const mouseOffsetY = (mouseY - canvas.height / 2) * 0.02;
+                const x = canvas.width / 2 + offsets[i] + radius * Math.cos(angle) + mouseOffsetX;
+                const y = canvas.height / 2 + radius * Math.sin(angle) + mouseOffsetY;
+                ctx.beginPath();
+                // Pulsing point size
+                ctx.arc(x, y, 3 + Math.sin(t / 500 + i) * 2, 0, 2 * Math.PI);
+                // Smooth color gradient
+                const hue = (t / 50 + i * 120) % 360;
+                ctx.fillStyle = `hsl(${hue}, 70%, 60%)`;
+                ctx.fill();
+                n[i]++;
+            }
+            if (n[0] <= 5000) {
+                animationFrameId = requestAnimationFrame(drawFrame);
             }
         }
+
+        function drawFrame(t) {
+            draw(t);
+        }
+
+        // IntersectionObserver to pause animation when off-screen
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (!animationFrameId && n[0] <= 5000) {
+                        animationFrameId = requestAnimationFrame(drawFrame);
+                    }
+                } else {
+                    if (animationFrameId) {
+                        cancelAnimationFrame(animationFrameId);
+                        animationFrameId = null;
+                    }
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // Initialize
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+        observer.observe(canvas);
+        fetchRepos();
     </script>
 </body>
 
