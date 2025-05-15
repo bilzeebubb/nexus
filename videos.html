@@ -6,60 +6,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="/nexus/img/favicon-32x32.png">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --navbar-height: 64px; /* Tailwind default height */
         }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            color: #ffffff;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
+        /* Content section styling */
+        .content-section {
+            background: rgba(0, 0, 0, 0.85); /* Semi-transparent black */
         }
 
-        h1 {
-            font-size: 2.5rem;
-            margin: 20px 0;
-            text-align: center;
-            color: #ff6f61;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            width: 100%;
-            max-width: 1200px;
-            padding: 20px;
-        }
-
+        /* Video card styles */
         .video-card {
             position: relative;
-            overflow: hidden;
             cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
 
         .video-card:hover {
             transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(255, 111, 97, 0.5);
+            box-shadow: 0 4px 8px rgba(165, 180, 252, 0.3); /* Indigo-300 shadow */
         }
 
         .video-card img {
             width: 100%;
             height: auto;
-            display: block;
         }
 
         .video-title {
@@ -68,19 +43,18 @@
             left: 0;
             right: 0;
             background: rgba(0, 0, 0, 0.7);
-            color: #fff;
+            color: white;
             padding: 10px;
-            font-size: 1rem;
             text-align: center;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.3s;
         }
 
         .video-card:hover .video-title {
             opacity: 1;
         }
 
-        /* Modal Styles */
+        /* Modal styles */
         .modal {
             display: none;
             position: fixed;
@@ -89,9 +63,9 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.9);
-            justify-content: center;
-            align-items: center;
             z-index: 1000;
+            align-items: center;
+            justify-content: center;
         }
 
         .modal-content {
@@ -104,160 +78,168 @@
         .modal-content iframe {
             width: 100%;
             height: 100%;
-            border: none;
         }
 
-        .close-btn {
+        .modal-close {
             position: absolute;
             top: -40px;
             right: 0;
-            color: #ff6f61;
+            color: white;
             font-size: 2rem;
             cursor: pointer;
-            transition: color 0.3s ease;
+            transition: color 0.3s;
         }
 
-        .close-btn:hover {
-            color: #fff;
-        }
-
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 1.8rem;
-            }
-
-            .video-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .modal-content {
-                width: 90%;
-            }
+        .modal-close:hover {
+            color: #a5b4fc; /* Indigo-300 */
         }
     </style>
 </head>
 
-<body>
-
+<body class="bg-black text-white font-sans">
     <!-- Navbar -->
-    <div class="w3-top">
-        <div class="w3-bar w3-black w3-card">
-            <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right"
-                href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i
-                    class="fa fa-bars"></i></a>
-            <a href="index.html" class="w3-bar-item w3-button w3-padding-large">HOME</a>
-            <a href="music.html" class="w3-bar-item w3-button w3-padding-large">MUSIC</a>
-            <a href="art.html" class="w3-bar-item w3-button w3-padding-large">ART</a>
-            <a href="code.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small">CODE</a>
-            <a href="videos.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small">VIDEOS</a>
-            <a href="#extras" class="w3-bar-item w3-button w3-padding-large w3-hide-small">EXTRAS</a>
-            <a href="#contact" class="w3-bar-item w3-button w3-padding-large w3-hide-small">CONTACT</a>
-            <a href="javascript:void(0)" class="w3-padding-large w3-hover-white w3-hide-small w3-right"><i
-                    class="fa fa-search"></i></a>
+    <nav class="fixed top-0 left-0 w-full bg-gray-900 shadow-lg z-50 h-16">
+        <div class="container mx-auto px-4 h-full flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <a href="index.html" class="text-xl font-bold hover:text-indigo-400 transition">Nexus</a>
+                <div class="hidden md:flex space-x-4">
+                    <a href="music.html" class="hover:text-indigo-400 transition">Music</a>
+                    <a href="art.html" class="hover:text-indigo-400 transition">Art</a>
+                    <a href="code.html" class="hover:text-indigo-400 transition">Code</a>
+                    <a href="videos.html" class="hover:text-indigo-400 transition">Videos</a>
+                    <a href="#extras" class="hover:text-indigo-400 transition">Extras</a>
+                    <a href="#contact" class="hover:text-indigo-400 transition">Contact</a>
+                </div>
+            </div>
+            <button id="menu-toggle" class="md:hidden text-2xl focus:outline-none">
+                <i class="fa fa-bars"></i>
+            </button>
+            <div class="hidden md:block">
+                <a href="javascript:void(0)" class="text-xl hover:text-indigo-400 transition">
+                    <i class="fa fa-search"></i>
+                </a>
+            </div>
         </div>
-    </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-900">
+            <div class="flex flex-col space-y-2 px-4 py-4">
+                <a href="code.html" class="hover:text-indigo-400 transition">Code</a>
+                <a href="videos.html" class="hover:text-indigo-400 transition">Videos</a>
+                <a href="#extras" class="hover:text-indigo-400 transition">Extras</a>
+            </div>
+        </div>
+    </nav>
 
-    <!-- Navbar on small screens -->
-    <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
-        <a href="code.html" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">CODE</a>
-        <a href="videos.html" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">VIDEOS</a>
-        <a href="#extras" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">EXTRAS</a>
-    </div>
+    <!-- Main Content -->
+    <main class="w-full pt-24 pb-8">
+        <!-- Video Grid Section -->
+        <section class="content-section px-4 py-12">
+            <div class="container mx-auto max-w-4xl">
+                <h2 class="text-2xl font-semibold mb-6">Videos</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="video-card" data-video-id="68zM-gWHKfU">
+                        <img src="https://img.youtube.com/vi/68zM-gWHKfU/hqdefault.jpg" alt="Neurological Stimulation Video">
+                        <div class="video-title">neurological stimulation</div>
+                    </div>
+                    <div class="video-card" data-video-id="46JSHeaiYTs">
+                        <img src="https://img.youtube.com/vi/46JSHeaiYTs/hqdefault.jpg" alt="[unidentified] Video">
+                        <div class="video-title">[unidentified]</div>
+                    </div>
+                    <div class="video-card" data-video-id="cDiwZl1gRN8">
+                        <img src="https://img.youtube.com/vi/cDiwZl1gRN8/hqdefault.jpg" alt="[bump] Video">
+                        <div class="video-title">[bump]</div>
+                    </div>
+                    <div class="video-card" data-video-id="5UhSEO7kUYA">
+                        <img src="https://img.youtube.com/vi/5UhSEO7kUYA/hqdefault.jpg" alt="VT_CB Video">
+                        <div class="video-title">VT_CB</div>
+                    </div>
+                    <div class="video-card" data-video-id="4x3zgmpAAzE">
+                        <img src="https://img.youtube.com/vi/4x3zgmpAAzE/hqdefault.jpg" alt="p h o n k Video">
+                        <div class="video-title">p h o n k</div>
+                    </div>
+                    <div class="video-card" data-video-id="o-pTUhsCVw4">
+                        <img src="https://img.youtube.com/vi/o-pTUhsCVw4/hqdefault.jpg" alt="urmybabe Video">
+                        <div class="video-title">urmybabe</div>
+                    </div>
+                    <div class="video-card" data-video-id="GoifsNhhAwk">
+                        <img src="https://img.youtube.com/vi/GoifsNhhAwk/hqdefault.jpg" alt="Rick N Morty - SwuM Video">
+                        <div class="video-title">Rick N Morty - SwuM | (@SwuMn1) [bzb]</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
-    <div class="video-grid" style="margin-top: 60px;">
-        <!-- Replace VIDEO_ID and thumbnail URLs with your actual YouTube video details -->
-        <div class="video-card" data-video-id="68zM-gWHKfU">
-            <img src="https://img.youtube.com/vi/68zM-gWHKfU/hqdefault.jpg" alt="Video 7">
-            <div class="video-title">neurological stimulation</div>
-        </div>
-        <div class="video-card" data-video-id="46JSHeaiYTs">
-            <img src="https://img.youtube.com/vi/46JSHeaiYTs/hqdefault.jpg" alt="Video 6">
-            <div class="video-title">[unidentified]</div>
-        </div>
-        <div class="video-card" data-video-id="cDiwZl1gRN8">
-            <img src="https://img.youtube.com/vi/cDiwZl1gRN8/hqdefault.jpg" alt="Video 5">
-            <div class="video-title">[bump]</div>
-        </div>
-        <div class="video-card" data-video-id="5UhSEO7kUYA">
-            <img src="https://img.youtube.com/vi/5UhSEO7kUYA/hqdefault.jpg" alt="Video 4">
-            <div class="video-title">VT_CB</div>
-        </div>
-        <div class="video-card" data-video-id="4x3zgmpAAzE">
-            <img src="https://img.youtube.com/vi/4x3zgmpAAzE/hqdefault.jpg" alt="Video 3">
-            <div class="video-title">p h o n k</div>
-        </div>
-        <div class="video-card" data-video-id="o-pTUhsCVw4">
-            <img src="https://img.youtube.com/vi/o-pTUhsCVw4/hqdefault.jpg" alt="Video 2">
-            <div class="video-title">urmybabe</div>
-        </div>
-        <div class="video-card" data-video-id="GoifsNhhAwk">
-            <img src="https://img.youtube.com/vi/GoifsNhhAwk/hqdefault.jpg" alt="Video 1">
-            <div class="video-title"> Rick N Morty - SwuM | (‪@SwuMn1‬) [bzb] </div>
-        </div>
-    </div>
-
-    <!-- Modal for video playback -->
+    <!-- Modal for Video Playback -->
     <div class="modal" id="videoModal">
         <div class="modal-content">
-            <span class="close-btn">&times;</span>
+            <span class="modal-close">×</span>
             <iframe src="" frameborder="0" allowfullscreen></iframe>
         </div>
     </div>
 
     <!-- Footer -->
-    <footer class="w3-container w3-padding-64 w3-center w3-opacity w3-light-grey w3-xlarge">
-        <i class="fa fa-facebook-official w3-hover-opacity"></i>
-        <i class="fa fa-instagram w3-hover-opacity"></i>
-        <i class="fa fa-twitter w3-hover-opacity"></i>
-        <p class="w3-medium">The Nexus</p>
+    <footer class="content-section px-4 py-12 text-center">
+        <div class="flex justify-center space-x-6 mb-4">
+            <a href="#" class="text-2xl hover:text-indigo-400 transition"><i class="fa fa-facebook-official"></i></a>
+            <a href="#" class="text-2xl hover:text-indigo-400 transition"><i class="fa fa-instagram"></i></a>
+            <a href="#" class="text-2xl hover:text-indigo-400 transition"><i class="fa fa-twitter"></i></a>
+        </div>
+        <p class="text-gray-400">The Nexus</p>
     </footer>
 
+    <!-- Scripts -->
     <script>
+        // Navbar Toggle
+        document.getElementById('menu-toggle').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Video Modal Functionality
         const videoCards = document.querySelectorAll('.video-card');
         const modal = document.getElementById('videoModal');
         const modalIframe = modal.querySelector('iframe');
-        const closeBtn = modal.querySelector('.close-btn');
+        const closeBtn = modal.querySelector('.modal-close');
 
         videoCards.forEach(card => {
             card.addEventListener('click', () => {
                 const videoId = card.getAttribute('data-video-id');
                 modalIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
                 modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+            });
+
+            // Keyboard accessibility
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    card.click();
+                }
             });
         });
 
         closeBtn.addEventListener('click', () => {
             modal.style.display = 'none';
-            modalIframe.src = ''; // Stop video by clearing src
+            modalIframe.src = ''; // Stop video
+            document.body.style.overflow = 'auto'; // Restore scrolling
         });
 
-        // Close modal when clicking outside the video
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
                 modal.style.display = 'none';
                 modalIframe.src = '';
+                document.body.style.overflow = 'auto';
             }
         });
 
-        // Navbar toggle for small screens
-        function myFunction() {
-            var x = document.getElementById("navDemo");
-            if (x.className.indexOf("w3-show") == -1) {
-                x.className += " w3-show";
-            } else {
-                x.className = x.className.replace(" w3-show", "");
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.style.display === 'flex') {
+                modal.style.display = 'none';
+                modalIframe.src = '';
+                document.body.style.overflow = 'auto';
             }
-        }
-
-        // Used to toggle the menu on small screens when clicking on the menu button
-        function myFunction() {
-            var x = document.getElementById("navDemo");
-            if (x.className.indexOf("w3-show") == -1) {
-                x.className += " w3-show";
-            } else {
-                x.className = x.className.replace(" w3-show", "");
-            }
-        }
+        });
     </script>
 </body>
 
