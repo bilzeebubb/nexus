@@ -6,25 +6,106 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="/nexus/img/favicon-32x32.png">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
-        body {
-            font-family: "Lato", sans-serif
+        :root {
+            --navbar-height: 64px; /* Tailwind default height */
         }
 
-        .mySlides {
-            display: none
+        /* Content section styling */
+        .content-section {
+            background: rgba(0, 0, 0, 0.85); /* Semi-transparent black */
         }
-        
+
+        /* Hero section */
+        .hero-slide {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .hero-slide.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        /* Card hover effects */
+        .portfolio-card, .preview-card {
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .portfolio-card:hover, .preview-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(165, 180, 252, 0.3); /* Indigo-300 shadow */
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            overflow: auto;
+        }
+
+        .modal img {
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
+        .modal-caption {
+            color: white;
+            font-size: 1.25rem;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: #a5b4fc; /* Indigo-300 */
+        }
+
+        /* Video container */
         .video-container {
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio (9 ÷ 16 = 0.5625) */
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
             height: 0;
             overflow: hidden;
-            max-width: 100%; /* Adjust this value to your preferred max size for desktop */
-            margin: 0 auto; /* Centers the container */
+            max-width: 100%;
         }
 
         .video-container iframe {
@@ -34,286 +115,267 @@
             width: 100%;
             height: 100%;
         }
+
+        /* Form inputs */
+        .form-input {
+            background: #1a1a1a;
+            border: 1px solid #4b5563; /* Gray-600 */
+            color: white;
+            padding: 10px;
+            width: 100%;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #a5b4fc; /* Indigo-300 */
+        }
     </style>
 </head>
 
-<body>
-
+<body class="bg-black text-white font-sans">
     <!-- Navbar -->
-    <div class="w3-top">
-        <div class="w3-bar w3-black w3-card">
-            <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right"
-                href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i
-                    class="fa fa-bars"></i></a>
-            <a href="index.html" class="w3-bar-item w3-button w3-padding-large">HOME</a>
-            <a href="music.html" class="w3-bar-item w3-button w3-padding-large">MUSIC</a>
-            <a href="art.html" class="w3-bar-item w3-button w3-padding-large">ART</a>
-            <a href="code.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small">CODE</a>
-            <a href="videos.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small">VIDEOS</a>
-            <a href="#extras" class="w3-bar-item w3-button w3-padding-large w3-hide-small">EXTRAS</a>
-            <a href="#contact" class="w3-bar-item w3-button w3-padding-large w3-hide-small">CONTACT</a>
-            <a href="javascript:void(0)" class="w3-padding-large w3-hover-white w3-hide-small w3-right"><i
-                    class="fa fa-search"></i></a>
-        </div>
-    </div>
-
-    <!-- Navbar on small screens -->
-    <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
-        <a href="code.html" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">CODE</a>
-        <a href="videos.html" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">VIDEOS</a>
-        <a href="#extras" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">EXTRAS</a>
-    </div> 
-
-    <!-- Page content -->
-    <div class="w3-content" style="max-width:2000px;margin-top:46px">
-
-        <!-- Automatic Slideshow Images -->
-        <div class="mySlides w3-display-container w3-center w3-black">
-            <img src="/nexus/img/9 (9).jpg" style="width:52%">
-            <div class="w3-display-bottommiddle w3-container w3-text-white w3-padding-32 w3-hide-small">
-                <h3>The Saint's Mouth Bleeds, So The Sinner's Mouth Can Gleam</h3>
-                <p><b>Available on all platforms</b></p>
+    <nav class="fixed top-0 left-0 w-full bg-gray-900 shadow-lg z-50 h-16">
+        <div class="container mx-auto px-4 h-full flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <a href="index.html" class="text-xl font-bold hover:text-indigo-400 transition">Nexus</a>
+                <div class="hidden md:flex space-x-4">
+                    <a href="music.html" class="hover:text-indigo-400 transition">Music</a>
+                    <a href="art.html" class="hover:text-indigo-400 transition">Art</a>
+                    <a href="code.html" class="hover:text-indigo-400 transition">Code</a>
+                    <a href="videos.html" class="hover:text-indigo-400 transition">Videos</a>
+                    <a href="#extras" class="hover:text-indigo-400 transition">Extras</a>
+                    <a href="#contact" class="hover:text-indigo-400 transition">Contact</a>
+                </div>
+            </div>
+            <button id="menu-toggle" class="md:hidden text-2xl focus:outline-none">
+                <i class="fa fa-bars"></i>
+            </button>
+            <div class="hidden md:block">
+                <a href="javascript:void(0)" class="text-xl hover:text-indigo-400 transition">
+                    <i class="fa fa-search"></i>
+                </a>
             </div>
         </div>
-        <div class="mySlides w3-display-container w3-center w3-black">
-            <img src="/nexus/img/ps.jpg" style="width:52%">
-            <div class="w3-display-bottommiddle w3-container w3-text-white w3-padding-32 w3-hide-small">
-                <h3>PROJECT SUNSHINE</h3>
-                <p><b>Scrapped Project</b></p>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-900">
+            <div class="flex flex-col space-y-2 px-4 py-4">
+                <a href="code.html" class="hover:text-indigo-400 transition">Code</a>
+                <a href="videos.html" class="hover:text-indigo-400 transition">Videos</a>
+                <a href="#extras" class="hover:text-indigo-400 transition">Extras</a>
             </div>
         </div>
-        <div class="mySlides w3-display-container w3-center w3-black">
-            <img src="/nexus/img/space.jpg" style="width:52%">
-            <div class="w3-display-bottommiddle w3-container w3-text-white w3-padding-32 w3-hide-small">
-                <h3>Edge of Nowhere</h3>
-                <p><b>Available on all platforms</b></p>
-            </div>
-        </div>
-        <div class="mySlides w3-display-container w3-center w3-black">
-            <img src="/nexus/img/UFO.png" style="width:52%">
-            <div class="w3-display-bottommiddle w3-container w3-text-white w3-padding-32 w3-hide-small">
-                <h3>encounters</h3>
-                <p><b>Available on all platforms</b></p>
-            </div>
-        </div>
+    </nav>
 
-
-        <!-- The Music Section -->
-        <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="music">
-            <h2 class="w3-wide">bilzeebub</h2>
-            <p class="w3-opacity"><i>Music is the language of God, math is the syntax.</i></p>
-            <p class="w3-justify-center">I've been making music for about a decade, officially posting since 2020/21. It
-                has been a journey of discovery, self and otherwise. To understand the frequencies is one thing, to
-                implement them is something entirely different. A branch on the tree of math, if you will.
-                My partner in crime, so to speak, in the music business has been my dear friend who goes by "Black
-                Santa" aka "Black Dwight". He has been a guiding light in the process of understanding not only the
-                business aspect, but the actual creation. Putting pen to paper, hands on boards. Getting shit done.
-                Without him, I would not be where I am.
-                We have so much in the works, you can find the music on all major platforms. <br><br> Those of you who
-                listen, thank you.</p>
-
-            <div class="w3-row w3-padding-32">
-                <div class="w3-first">
-                    <p>bzb</p>
-                    <img src="/nexus/img/bzb.png" class="w3-square w3-margin-bottom" alt="actuallybzb"
-                        style="width:30%">
+    <!-- Main Content -->
+    <main class="w-full">
+        <!-- Hero Section -->
+        <section class="relative h-screen flex items-center justify-center">
+            <div class="hero-slide" style="background-image: url('/nexus/img/9 (9).jpg');">
+                <div class="hero-content">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-4">The Saint's Mouth Bleeds</h1>
+                    <p class="text-lg md:text-xl text-gray-400 mb-6">Available on all platforms</p>
+                    <a href="music.html" class="inline-block bg-indigo-600 text-white px-6 py-3 font-semibold hover:bg-indigo-500 transition">Explore Music</a>
                 </div>
             </div>
-        </div>
-
-        <div class="w3-center">
-            <div class="video-container">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/46JSHeaiYTs?si=EumQhfzaoFt0Qk1z" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </div>
-          </div>
-
-        <!-- The Art Section -->
-        <!-- Container (Portfolio Section) -->
-        <div class="w3-container w3-padding-64 w3-black" id="art">
-            <h3 class="w3-center">PORTFOLIO</h3>
-            <p class="w3-center">Thank you for observing my work, now it is real.</p><br>
-
-            <!-- Responsive Grid. Four columns on tablets, laptops and desktops. Will stack on mobile devices/small screens (100% width) -->
-            <div class="w3-row-padding w3-center">
-                <div class="w3-col m3">
-                    <img src="/nexus/img/creation.jpg" style="width:100%" onclick="onClick(this)"
-                        class="w3-hover-opacity" alt="Creation of Man">
-                </div>
-
-                <div class="w3-col m3">
-                    <img src="/nexus/img/exo-dab.jpg" style="width:100%" onclick="onClick(this)"
-                        class="w3-hover-opacity" alt="Internal Malfunction">
-                </div>
-
-                <div class="w3-col m3">
-                    <img src="/nexus/img/shambo.jpg" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity"
-                        alt="Shambho">
-                </div>
-
-                <div class="w3-col m3">
-                    <img src="/nexus/img/concentration.jpg" style="width:100%" onclick="onClick(this)"
-                        class="w3-hover-opacity" alt="Concentrate...">
+            <div class="hero-slide" style="background-image: url('/nexus/img/ps.jpg');">
+                <div class="hero-content">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-4">PROJECT SUNSHINE</h1>
+                    <p class="text-lg md:text-xl text-gray-400 mb-6">Scrapped Project</p>
+                    <a href="music.html" class="inline-block bg-indigo-600 text-white px-6 py-3 font-semibold hover:bg-indigo-500 transition">Explore Music</a>
                 </div>
             </div>
-
-            <div class="w3-row-padding w3-center w3-section">
-                <div class="w3-col m3">
-                    <img src="/nexus/img/mind-blown.jpg" style="width:100%" onclick="onClick(this)"
-                        class="w3-hover-opacity" alt="Expansion">
+            <div class="hero-slide" style="background-image: url('/nexus/img/space.jpg');">
+                <div class="hero-content">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-4">Edge of Nowhere</h1>
+                    <p class="text-lg md:text-xl text-gray-400 mb-6">Available on all platforms</p>
+                    <a href="music.html" class="inline-block bg-indigo-600 text-white px-6 py-3 font-semibold hover:bg-indigo-500 transition">Explore Music</a>
                 </div>
-
-                <div class="w3-col m3">
-                    <img src="/nexus/img/tab.jpg" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity"
-                        alt="Philosopher's Blotter">
-                </div>
-
-                <div class="w3-col m3">
-                    <img src="/nexus/img/woah.jpg" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity"
-                        alt="w o a h . . .">
-                </div>
-
-                <div class="w3-col m3">
-                    <img src="/nexus/img/assafras.jpg" style="width:100%" onclick="onClick(this)"
-                        class="w3-hover-opacity" alt="Word Scramble #1">
-                </div>
-                <button class="w3-button w3-padding-large w3-light-grey w3-center" style="margin-top:64px"><a href="art.html">LOAD MORE</a></button>
             </div>
-        </div>
-
-        <!-- Modal for full size images on click-->
-        <div id="modal01" class="w3-modal w3-black" onclick="this.style.display='none'">
-            <span class="w3-button w3-large w3-black w3-display-topright" title="Close Modal Image"><i
-                    class="fa fa-remove"></i></span>
-            <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
-                <img id="img01" class="w3-image">
-                <p id="caption" class="w3-opacity w3-large"></p>
+            <div class="hero-slide" style="background-image: url('/nexus/img/UFO.png');">
+                <div class="hero-content">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-4">encounters</h1>
+                    <p class="text-lg md:text-xl text-gray-400 mb-6">Available on all platforms</p>
+                    <a href="music.html" class="inline-block bg-indigo-600 text-white px-6 py-3 font-semibold hover:bg-indigo-500 transition">Explore Music</a>
+                </div>
             </div>
+        </section>
+
+        <!-- Music Preview -->
+        <section class="content-section px-4 py-12" id="music">
+            <div class="container mx-auto max-w-4xl text-center">
+                <h2 class="text-2xl font-semibold mb-2">bilzeebub</h2>
+                <p class="text-gray-400 italic mb-6">Music is the language of God, math is the syntax.</p>
+                <p class="text-gray-300 mb-6">I've been making music for about a decade, officially posting since 2020/21. It has been a journey of discovery, self and otherwise. To understand the frequencies is one thing, to implement them is something entirely different. A branch on the tree of math, if you will. My partner in crime, so to speak, in the music business has been my dear friend who goes by "Black Santa" aka "Black Dwight". He has been a guiding light in the process of understanding not only the business aspect, but the actual creation. Putting pen to paper, hands on boards. Getting shit done. Without him, I would not be where I am. We have so much in the works, you can find the music on all major platforms. Those of you who listen, thank you.</p>
+                <div class="flex justify-center mb-6">
+                    <img src="/nexus/img/bzb.png" alt="bilzeebub Logo" class="w-1/3 max-w-xs">
+                </div>
+                <a href="music.html" class="inline-block bg-indigo-600 text-white px-6 py-3 font-semibold hover:bg-indigo-500 transition">Discover Music</a>
+            </div>
+        </section>
+
+        <!-- Video Preview -->
+        <section class="content-section px-4 py-12">
+            <div class="container mx-auto max-w-4xl text-center">
+                <h2 class="text-2xl font-semibold mb-6">Featured Video</h2>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/46JSHeaiYTs?si=EumQhfzaoFt0Qk1z" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                <a href="videos.html" class="inline-block bg-indigo-600 text-white px-6 py-3 font-semibold hover:bg-indigo-500 transition mt-6">Watch More Videos</a>
+            </div>
+        </section>
+
+        <!-- Art Preview -->
+        <section class="content-section px-4 py-12" id="art">
+            <div class="container mx-auto max-w-4xl text-center">
+                <h2 class="text-2xl font-semibold mb-2">Portfolio</h2>
+                <p class="text-gray-400 mb-6">Thank you for observing my work, now it is real.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="portfolio-card" onclick="openModal('/nexus/img/creation.jpg', 'Creation of Man')">
+                        <img src="/nexus/img/creation.jpg" alt="Creation of Man" class="w-full h-auto">
+                    </div>
+                    <div class="portfolio-card" onclick="openModal('/nexus/img/exo-dab.jpg', 'Internal Malfunction')">
+                        <img src="/nexus/img/exo-dab.jpg" alt="Internal Malfunction" class="w-full h-auto">
+                    </div>
+                    <div class="portfolio-card" onclick="openModal('/nexus/img/shambo.jpg', 'Shambho')">
+                        <img src="/nexus/img/shambo.jpg" alt="Shambho" class="w-full h-auto">
+                    </div>
+                    <div class="portfolio-card" onclick="openModal('/nexus/img/concentration.jpg', 'Concentrate...')">
+                        <img src="/nexus/img/concentration.jpg" alt="Concentrate..." class="w-full h-auto">
+                    </div>
+                    <div class="portfolio-card" onclick="openModal('/nexus/img/mind-blown.jpg', 'Expansion')">
+                        <img src="/nexus/img/mind-blown.jpg" alt="Expansion" class="w-full h-auto">
+                    </div>
+                    <div class="portfolio-card" onclick="openModal('/nexus/img/tab.jpg', 'Philosopher\'s Blotter')">
+                        <img src="/nexus/img/tab.jpg" alt="Philosopher's Blotter" class="w-full h-auto">
+                    </div>
+                    <div class="portfolio-card" onclick="openModal('/nexus/img/woah.jpg', 'w o a h . . .')">
+                        <img src="/nexus/img/woah.jpg" alt="w o a h . . ." class="w-full h-auto">
+                    </div>
+                    <div class="portfolio-card" onclick="openModal('/nexus/img/assafras.jpg', 'Word Scramble #1')">
+                        <img src="/nexus/img/assafras.jpg" alt="Word Scramble #1" class="w-full h-auto">
+                    </div>
+                </div>
+                <a href="art.html" class="inline-block bg-indigo-600 text-white px-6 py-3 font-semibold hover:bg-indigo-500 transition mt-6">View Full Portfolio</a>
+            </div>
+        </section>
+
+        <!-- Modal for Art -->
+        <div id="image-modal" class="modal">
+            <span class="modal-close">×</span>
+            <img id="modal-image" src="" alt="">
+            <p id="modal-caption" class="modal-caption"></p>
         </div>
 
-        <!-- Container (Code Section) -->
-        <div class="w3-content w3-container w3-padding-64" id="code">
-            <h3 class="w3-center">CODE</h3>
-            <p class="w3-center"><em><a href="https://github.com/bilzeebubb">Github</a></em></p>
-            <div class="w3-row w3-center">
-                <!-- <div class="w3-col m6 w3-center w3-padding-large"> -->
-                    <!-- <p><b><i class="fa fa-user w3-margin-right"></i>Wil Clean</b></p><br> -->
-                    <!-- <img src="/nexus/img/selfEDITED.jpg" class="w3-round w3-image w3-opacity w3-hover-opacity-off" -->
-                        <!-- alt="Photo of Me" width="200" height="333"> -->
-                <!-- </div> -->
-
-                <!-- Hide this text on small devices -->
-                <div class="m6 w3-padding-large">
-                    <p>I’ve been drawn to the world of code and machines since I was a kid, starting with simple batch
-                        scripts and diving deeper from there.
-                        By freshman year of high school, I was fully immersed in programming—and my fascination with the
-                        networked world has only grown since.<br>
-                        Now, after years of absorbing concepts, languages, and patterns, I’m focused on building. Taking
-                        all the fragments I’ve gathered and turning them into the systems,
-                        tools, and experiences I imagined a decade ago—The Nexus is the realization of a vision that’s
-                        been with me from the beginning.
-                        I hope to be able to expand my skillset through the development of this website, and to document
-                        things that I create, discover, or ponder.
-                        I hope that you, the observer of this node, can take something and transmute it into something
-                        of your own. <br><br> <i>
-                            “Man becomes, as it were, the sex organs of the machine world, as the bee of the plant
-                            world, enabling it to fecundate and to evolve ever new forms.
-                            The machine world reciprocates man’s love by expediting his wishes and desires, namely, in
-                            providing him with wealth”<br>
-                            ― Marshall McLuhan, Understanding Media: The Extensions of Man </i></p>
-                </div>
+        <!-- Code Preview -->
+        <section class="content-section px-4 py-12" id="code">
+            <div class="container mx-auto max-w-4xl text-center">
+                <h2 class="text-2xl font-semibold mb-2">Code</h2>
+                <p class="text-gray-400 mb-6"><a href="https://github.com/bilzeebubb" class="text-indigo-400 hover:underline">Github</a></p>
+                <p class="text-gray-300 mb-6">I’ve been drawn to the world of code and machines since I was a kid, starting with simple batch scripts and diving deeper from there. By freshman year of high school, I was fully immersed in programming—and my fascination with the networked world has only grown since. Now, after years of absorbing concepts, languages, and patterns, I’m focused on building. Taking all the fragments I’ve gathered and turning them into the systems, tools, and experiences I imagined a decade ago—The Nexus is the realization of a vision that’s been with me from the beginning. I hope to be able to expand my skillset through the development of this website, and to document things that I create, discover, or ponder. I hope that you, the observer of this node, can take something and transmute it into something of your own.</p>
+                <p class="text-gray-400 italic mb-6">“Man becomes, as it were, the sex organs of the machine world, as the bee of the plant world, enabling it to fecundate and to evolve ever new forms. The machine world reciprocates man’s love by expediting his wishes and desires, namely, in providing him with wealth”<br>― Marshall McLuhan, Understanding Media: The Extensions of Man</p>
+                <a href="code.html" class="inline-block bg-indigo-600 text-white px-6 py-3 font-semibold hover:bg-indigo-500 transition">Explore Code</a>
             </div>
-            <!-- <p class="w3-large w3-center w3-padding-16">Basic Skills Include:</p> -->
-            <!-- <p class="w3-center"><i class="fa fa-html5"></i> HTML</p> -->
-            <!-- <p class="w3-center"><i class="fa fa-css3"></i> CSS</p> -->
-            <!-- <p class="w3-center"><i class="fa fa-code"></i> JS</p> -->
-        </div>
+        </section>
 
-
-
-        <!-- The Contact Section -->
-        <div class="w3-container w3-content w3-padding-64" style="max-width:800px" id="contact">
-            <h2 class="w3-wide w3-center">CONTACT</h2>
-            <p class="w3-opacity w3-center"><i>Business inquiries or otherwise</i></p>
-            <div class="w3-row w3-padding-32">
-                <div class="w3-col m6 w3-large w3-margin-bottom">
-                    <i class="fa fa-map-marker" style="width:30px"></i> Planet Earth<br>
-                    <i class="fa fa-phone" style="width:30px"></i> ___-___-____ <br>
-                    <i class="fa fa-envelope" style="width:30px"> </i> business.contact.wilsaub@gmail.com<br>
-                </div>
-                <div class="w3-col m6">
-                    <form action="/action_page.php" target="_blank">
-                        <div class="w3-row-padding" style="margin:0 -16px 8px -16px">
-                            <div class="w3-half">
-                                <input class="w3-input w3-border" type="text" placeholder="Name" required name="Name">
+        <!-- Contact Section -->
+        <section class="content-section px-4 py-12" id="contact">
+            <div class="container mx-auto max-w-4xl text-center">
+                <h2 class="text-2xl font-semibold mb-2">Contact</h2>
+                <p class="text-gray-400 italic mb-6">Business inquiries or otherwise</p>
+                <div class="flex flex-col md:flex-row gap-8">
+                    <div class="flex-1 text-left">
+                        <p class="mb-4"><i class="fa fa-map-marker mr-2"></i>Planet Earth</p>
+                        <p class="mb-4"><i class="fa fa-phone mr-2"></i>___-___-____</p>
+                        <p class="mb-4"><i class="fa fa-envelope mr-2"></i>business.contact.wilsaub@gmail.com</p>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-gray-300 mb-4">Contact form coming soon. Please email for inquiries.</p>
+                        <!-- Placeholder for non-functional form -->
+                        <div class="space-y-4 opacity-50 pointer-events-none">
+                            <div class="flex gap-4">
+                                <input class="form-input" type="text" placeholder="Name" disabled>
+                                <input class="form-input" type="text" placeholder="Email" disabled>
                             </div>
-                            <div class="w3-half">
-                                <input class="w3-input w3-border" type="text" placeholder="Email" required name="Email">
-                            </div>
+                            <input class="form-input" type="text" placeholder="Message" disabled>
+                            <button class="bg-indigo-600 text-white px-6 py-3 font-semibold hover:bg-indigo-500 transition w-full md:w-auto float-right" disabled>Send</button>
                         </div>
-                        <input class="w3-input w3-border" type="text" placeholder="Message" required name="Message">
-                        <button class="w3-button w3-black w3-section w3-right" type="submit">SEND</button>
-                    </form>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <!-- End Page Content -->
-    </div>
+        </section>
+    </main>
 
     <!-- Footer -->
-    <footer class="w3-container w3-padding-64 w3-center w3-opacity w3-light-grey w3-xlarge">
-        <i class="fa fa-facebook-official w3-hover-opacity"></i>
-        <i class="fa fa-instagram w3-hover-opacity"></i>
-        <i class="fa fa-twitter w3-hover-opacity"></i>
-        <p class="w3-medium">The Nexus</p>
+    <footer class="content-section px-4 py-12 text-center">
+        <div class="flex justify-center space-x-6 mb-4">
+            <a href="#" class="text-2xl hover:text-indigo-400 transition"><i class="fa fa-facebook-official"></i></a>
+            <a href="#" class="text-2xl hover:text-indigo-400 transition"><i class="fa fa-instagram"></i></a>
+            <a href="#" class="text-2xl hover:text-indigo-400 transition"><i class="fa fa-twitter"></i></a>
+        </div>
+        <p class="text-gray-400">The Nexus</p>
     </footer>
 
+    <!-- Scripts -->
     <script>
+        // Navbar Toggle
+        document.getElementById('menu-toggle').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
 
-        // Automatic Slideshow - change image every 4 seconds
-        var myIndex = 0;
-        carousel();
+        // Hero Slideshow
+        let heroIndex = 0;
+        const heroSlides = document.querySelectorAll('.hero-slide');
+        function showHeroSlide() {
+            heroSlides.forEach(slide => slide.classList.remove('active'));
+            heroIndex = (heroIndex + 1) % heroSlides.length;
+            heroSlides[heroIndex].classList.add('active');
+        }
+        showHeroSlide();
+        setInterval(showHeroSlide, 5000);
 
-        function carousel() {
-            var i;
-            var x = document.getElementsByClassName("mySlides");
-            for (i = 0; i < x.length; i++) {
-                x[i].style.display = "none";
+        // Modal Functionality
+        const modal = document.getElementById('image-modal');
+        const modalImage = document.getElementById('modal-image');
+        const modalCaption = document.getElementById('modal-caption');
+        const closeModal = document.querySelector('.modal-close');
+
+        function openModal(src, caption) {
+            modalImage.src = src;
+            modalImage.alt = caption;
+            modalCaption.textContent = caption;
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
             }
-            myIndex++;
-            if (myIndex > x.length) { myIndex = 1 }
-            x[myIndex - 1].style.display = "block";
-            setTimeout(carousel, 4000);
-        }
+        });
 
-        // Modal Image Gallery
-        function onClick(element) {
-            document.getElementById("img01").src = element.src;
-            document.getElementById("modal01").style.display = "block";
-            var captionText = document.getElementById("caption");
-            captionText.innerHTML = element.alt;
-        }
-
-        // Used to toggle the menu on small screens when clicking on the menu button
-        function myFunction() {
-            var x = document.getElementById("navDemo");
-            if (x.className.indexOf("w3-show") == -1) {
-                x.className += " w3-show";
-            } else {
-                x.className = x.className.replace(" w3-show", "");
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.style.display === 'flex') {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
             }
-        }
+        });
 
-        // When the user clicks anywhere outside of the modal, close it
-        var modal = document.getElementById('ticketModal');
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-
+        // Keyboard Accessibility for Portfolio Cards
+        document.querySelectorAll('.portfolio-card').forEach(card => {
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    card.click();
+                }
+            });
+        });
     </script>
-
 </body>
 
 </html>
