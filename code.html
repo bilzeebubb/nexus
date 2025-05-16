@@ -32,6 +32,38 @@
             background: rgba(0, 0, 0, 0.85); /* Semi-transparent black for contrast */
             backdrop-filter: blur(4px); /* Subtle blur for modern look */
         }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background: #1a1a1a; /* Dark gray */
+            color: white;
+        }
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .modal-close:hover {
+            color: #a5b4fc; /* Indigo-300 */
+        }
+        #search-modal:not(.hidden) {
+            display: flex;
+        }
     </style>
 </head>
 
@@ -54,9 +86,19 @@
                 <i class="fa fa-bars"></i>
             </button>
             <div class="hidden md:block">
-                <a href="javascript:void(0)" class="text-xl hover:text-indigo-400 transition">
+                <button id="search-toggle" class="text-xl hover:text-indigo-400 transition" aria-label="Open search">
                     <i class="fa fa-search"></i>
-                </a>
+                </button>
+            </div>
+            <!-- Search Modal -->
+            <div id="search-modal" class="modal hidden">
+                <div class="modal-content w-full max-w-2xl p-6">
+                    <span class="modal-close">×</span>
+                    <form id="search-form" role="search">
+                        <input type="search" id="search-input" class="form-input w-full mb-4" placeholder="Search Nexus..." aria-label="Search through site content">
+                    </form>
+                    <div id="search-results" class="text-gray-300"></div>
+                </div>
             </div>
         </div>
         <!-- Mobile Menu -->
@@ -270,6 +312,101 @@ draw(0);
         });
         observer.observe(canvas);
         fetchRepos();
+
+        // Search Index
+        const searchIndex = [
+            {
+                title: "Home - Nexus",
+                description: "The Saint's Mouth Bleeds, PROJECT SUNSHINE, Edge of Nowhere, encounters, bilzeebub music, portfolio, code, contact",
+                url: "index.html",
+                keywords: ["home", "nexus", "music", "art", "code", "videos"]
+            },
+            {
+                title: "Music - bilzeebub",
+                description: "Music is the language of God, math is the syntax. Explore bilzeebub's music journey since 2020/21 with Black Santa.",
+                url: "music.html",
+                keywords: ["music", "bilzeebub", "black santa", "frequencies"]
+            },
+            {
+                title: "Art - Portfolio",
+                description: "Thank you for observing my work, now it is real. View digital art creations like Creation of Man, Shambho, and more.",
+                url: "art.html",
+                keywords: ["art", "portfolio", "digital art", "creation", "shambho"]
+            },
+            {
+                title: "Code - Github",
+                description: "Explore coding projects on Github. The Nexus is the realization of a vision from batch scripts to systems.",
+                url: "code.html",
+                keywords: ["code", "github", "programming", "nexus"]
+            },
+            {
+                title: "Videos - Nexus",
+                description: "Watch videos like neurological stimulation, p h o n k, urmybabe, and Rick N Morty - SwuM.",
+                url: "videos.html",
+                keywords: ["videos", "youtube", "music videos", "swum"]
+            }
+        ];
+
+        // Search Modal Toggle
+        document.getElementById('search-toggle').addEventListener('click', () => {
+            document.getElementById('search-modal').classList.toggle('hidden');
+            document.getElementById('search-input').focus();
+        });
+
+        // Search Logic
+        document.getElementById('search-form').addEventListener('input', (e) => {
+            const query = e.target.value.trim().toLowerCase();
+            const resultsEl = document.getElementById('search-results');
+            
+            if (query.length < 2) {
+                resultsEl.innerHTML = '<p class="text-gray-400">Enter at least 2 characters to search.</p>';
+                return;
+            }
+
+            const results = searchIndex.filter(item => 
+                item.title.toLowerCase().includes(query) ||
+                item.description.toLowerCase().includes(query) ||
+                item.keywords.some(keyword => keyword.includes(query))
+            );
+
+            if (results.length === 0) {
+                resultsEl.innerHTML = '<p class="text-gray-400">No results found.</p>';
+                return;
+            }
+
+            resultsEl.innerHTML = results.map(item => `
+                <div class="mb-4">
+                    <a href="${item.url}" class="text-indigo-400 hover:underline text-lg">${item.title}</a>
+                    <p class="text-gray-300">${item.description}</p>
+                </div>
+            `).join('');
+        });
+
+        // Close Modal
+        const searchModal = document.getElementById('search-modal');
+        const searchClose = searchModal.querySelector('.modal-close');
+
+        searchClose.addEventListener('click', () => {
+            searchModal.classList.add('hidden');
+            document.getElementById('search-input').value = '';
+            document.getElementById('search-results').innerHTML = '';
+        });
+
+        searchModal.addEventListener('click', (e) => {
+            if (e.target === searchModal) {
+                searchModal.classList.add('hidden');
+                document.getElementById('search-input').value = '';
+                document.getElementById('search-results').innerHTML = '';
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !searchModal.classList.contains('hidden')) {
+                searchModal.classList.add('hidden');
+                document.getElementById('search-input').value = '';
+                document.getElementById('search-results').innerHTML = '';
+            }
+        });
     </script>
 </body>
 
