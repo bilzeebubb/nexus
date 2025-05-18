@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Nexus</title>
+    <title>Nexus - Blog</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="/nexus/img/favicon-32x32.png">
@@ -11,7 +11,8 @@
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Shared Styles -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/nexus/styles.css">
+    
 </head>
 
 <body class="bg-black text-white font-sans">
@@ -53,52 +54,38 @@
         </div>
     </nav>
 
+    <!-- Search Modal -->
+    <div id="search-modal" class="modal hidden">
+        <div class="modal-content w-full max-w-2xl p-6">
+            <span class="modal-close">×</span>
+            <form id="search-form" role="search">
+                <input type="search" id="search-input" class="form-input w-full mb-4" placeholder="Search Nexus..." aria-label="Search through site content">
+            </form>
+            <div id="search-results" class="text-gray-300"></div>
+        </div>
+    </div>
+
     <!-- Main Content -->
     <main class="w-full pt-24 pb-8">
-        <!-- Video Grid Section -->
+        <!-- Blog Section -->
         <section class="content-section px-4 py-12">
             <div class="container mx-auto max-w-4xl">
-                <!-- <h2 class="text-2xl font-semibold mb-6">Videos</h2> -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <div class="video-card" data-video-id="68zM-gWHKfU">
-                        <img src="https://img.youtube.com/vi/68zM-gWHKfU/hqdefault.jpg"
-                            alt="Neurological Stimulation Video">
-                        <div class="video-title">neurological stimulation</div>
-                    </div>
-                    <div class="video-card" data-video-id="46JSHeaiYTs">
-                        <img src="https://img.youtube.com/vi/46JSHeaiYTs/hqdefault.jpg" alt="[unidentified] Video">
-                        <div class="video-title">[unidentified]</div>
-                    </div>
-                    <div class="video-card" data-video-id="cDiwZl1gRN8">
-                        <img src="https://img.youtube.com/vi/cDiwZl1gRN8/hqdefault.jpg" alt="[bump] Video">
-                        <div class="video-title">[bump]</div>
-                    </div>
-                    <div class="video-card" data-video-id="5UhSEO7kUYA">
-                        <img src="https://img.youtube.com/vi/5UhSEO7kUYA/hqdefault.jpg" alt="VT_CB Video">
-                        <div class="video-title">VT_CB</div>
-                    </div>
-                    <div class="video-card" data-video-id="4x3zgmpAAzE">
-                        <img src="https://img.youtube.com/vi/4x3zgmpAAzE/hqdefault.jpg" alt="p h o n k Video">
-                        <div class="video-title">p h o n k</div>
-                    </div>
-                    <div class="video-card" data-video-id="o-pTUhsCVw4">
-                        <img src="https://img.youtube.com/vi/o-pTUhsCVw4/hqdefault.jpg" alt="urmybabe Video">
-                        <div class="video-title">urmybabe</div>
-                    </div>
-                    <div class="video-card" data-video-id="GoifsNhhAwk">
-                        <img src="https://img.youtube.com/vi/GoifsNhhAwk/hqdefault.jpg" alt="Rick N Morty - SwuM Video">
-                        <div class="video-title">Rick N Morty - SwuM | (@SwuMn1) [bzb]</div>
-                    </div>
+                <h2 class="text-2xl font-semibold mb-6 text-center">Blog</h2>
+                <p class="text-gray-400 italic mb-8 text-center">Thoughts, musings, and updates from the Nexus.</p>
+                <div id="blog-posts" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Blog posts will be dynamically inserted here -->
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Modal for Video Playback -->
-    <div class="modal" id="videoModal">
+    <!-- Blog Post Modal -->
+    <div id="blog-modal" class="modal">
         <div class="modal-content">
             <span class="modal-close">×</span>
-            <iframe src="" frameborder="0" allowfullscreen></iframe>
+            <h3 id="modal-title" class="text-2xl font-semibold mb-2"></h3>
+            <p id="modal-date" class="text-gray-400 mb-4"></p>
+            <div id="modal-content" class="text-gray-300"></div>
         </div>
     </div>
 
@@ -112,7 +99,6 @@
         <p class="text-gray-400">The Nexus</p>
     </footer>
 
-    <!-- Scripts -->
     <script src="scripts.js"></script>
 </body>
 
