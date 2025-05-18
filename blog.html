@@ -11,7 +11,7 @@
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Shared Styles -->
-    <link rel="stylesheet" href="/nexus/styles.css">
+    <link rel="stylesheet" href="styles.css">
     
 </head>
 
@@ -55,6 +55,16 @@
     </nav>
 
     <!-- Search Modal -->
+    <div id="search-modal" class="modal hidden">
+        <div class="modal-content w-full max-w-2xl p-6">
+            <span class="modal-close">×</span>
+            <form id="search-form" role="search">
+                <input type="search" id="search-input" class="form-input w-full mb-4" placeholder="Search Nexus..." aria-label="Search through site content">
+            </form>
+            <div id="search-results" class="text-gray-300"></div>
+        </div>
+    </div>
+
     <div id="search-modal" class="modal hidden">
         <div class="modal-content w-full max-w-2xl p-6">
             <span class="modal-close">×</span>
