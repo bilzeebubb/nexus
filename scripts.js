@@ -504,7 +504,7 @@ function initializeVideos() {
 
 function initializeBlog() {
     // Fetch and Render Blog Posts
-    fetch('/nexus/posts.json')
+    fetch('posts.json')
         .then(response => {
             if (!response.ok) throw new Error('Failed to load posts');
             return response.json();
