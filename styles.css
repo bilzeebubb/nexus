@@ -90,7 +90,7 @@
 }
 
 .modal-content {
-    background: #1a1a1a; /* Dark gray */
+    background: none; /* Dark gray */
     color: white;
     max-width: 800px;
     width: 90%;
@@ -130,19 +130,21 @@
 }
 
 /* Video modal specific */
-.modal-content.video-modal {
+#videoModal .modal-content {
     position: relative;
     width: 100%;
     max-width: 1400px;
     aspect-ratio: 16 / 9;
+    height: 80vh; /* Ensure large display */
 }
 
-.modal-content.video-modal iframe {
+#videoModal .modal-content iframe {
     width: 100%;
     height: 100%;
+    border: none;
 }
 
-.modal-content.video-modal + .modal-close {
+#videoModal .modal-close {
     top: -40px;
     right: 0;
 }
@@ -250,7 +252,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.1);
     color: white;
     padding: 10px;
     text-align: center;
