@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "title": "The Frequency of Creation",
+        "date": "2025-05-10",
+        "excerpt": "Exploring the intersection of music, math, and creativity in my latest project.",
+        "content": "Music has always been a universal language, but what if it's also a mathematical one? In my recent work, I've been diving into the frequencies that shape sound and how they mirror the patterns of the universe..."
+    },
+    {
+        "id": 2,
+        "title": "Why I Code",
+        "date": "2025-04-15",
+        "excerpt": "A reflection on my journey from batch scripts to building The Nexus.",
+        "content": "Coding started as a childhood curiosity—writing simple batch scripts to automate tasks. Over the years, it became a way to build worlds..."
+    },
+    {
+        "id": 3,
+        "title": "Art as Observation",
+        "date": "2025-03-20",
+        "excerpt": "How creating digital art has changed my perspective on reality.",
+        "content": "Creating art, like 'Creation of Man' or 'Shambho,' is more than just drawing—it's observing..."
+    }
+]

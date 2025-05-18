@@ -10,125 +10,45 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
-        :root {
-            --navbar-height: 64px; /* Tailwind default height */
-        }
-
-        /* Ensure content section matches code.html styling */
-        .content-section {
-            background: rgba(0, 0, 0, 0.85); /* Semi-transparent black for contrast */
-        }
-
-        /* Modal styles */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            overflow: auto;
-        }
-
-        .modal img {
-            max-width: 90%;
-            max-height: 90vh;
-            object-fit: contain;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            color: white;
-            font-size: 2rem;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-
-        .modal-close:hover {
-            color: #a5b4fc; /* Indigo-300 */
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-        .modal-content {
-            background: #1a1a1a; /* Dark gray */
-            color: white;
-        }
-        .modal-close {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            color: white;
-            font-size: 2rem;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-        .modal-close:hover {
-            color: #a5b4fc; /* Indigo-300 */
-        }
-        #search-modal:not(.hidden) {
-            display: flex;
-        }
-    </style>
+    <!-- Shared Styles -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="bg-black text-white font-sans">
     <!-- Navbar -->
-    <nav class="fixed top-0 left-0 w-full bg-gray-900 shadow-lg z-50 h-16">
+    <nav class="fixed top-0 left-0 w-full bg-gray-900 shadow-lg z-50 h-16 transition-all duration-300" id="navbar">
         <div class="container mx-auto px-4 h-full flex items-center justify-between">
             <div class="flex items-center space-x-4">
-                <a href="index.html" class="text-xl font-bold hover:text-indigo-400 transition">Nexus</a>
+                <a href="index.html" class="text-xl font-bold text-white hover:text-indigo-400 transition transform hover:scale-110 logo-pulse" id="logo">Nexus</a>
                 <div class="hidden md:flex space-x-4">
-                    <a href="music.html" class="hover:text-indigo-400 transition">Music</a>
-                    <a href="art.html" class="hover:text-indigo-400 transition">Art</a>
-                    <a href="code.html" class="hover:text-indigo-400 transition">Code</a>
-                    <a href="videos.html" class="hover:text-indigo-400 transition">Videos</a>
-                    <a href="#extras" class="hover:text-indigo-400 transition">Extras</a>
-                    <a href="#contact" class="hover:text-indigo-400 transition">Contact</a>
+                    <a href="music.html" class="nav-link relative text-white hover:text-indigo-400 transition">Music</a>
+                    <a href="art.html" class="nav-link relative text-white hover:text-indigo-400 transition">Art</a>
+                    <a href="code.html" class="nav-link relative text-white hover:text-indigo-400 transition">Code</a>
+                    <a href="videos.html" class="nav-link relative text-white hover:text-indigo-400 transition">Videos</a>
+                    <a href="blog.html" class="nav-link relative text-white hover:text-indigo-400 transition">Blog</a>
+                    <a href="#extras" class="nav-link relative text-white hover:text-indigo-400 transition">Extras</a>
+                    <a href="#contact" class="nav-link relative text-white hover:text-indigo-400 transition">Contact</a>
                 </div>
             </div>
-            <button id="menu-toggle" class="md:hidden text-2xl focus:outline-none">
+            <button id="menu-toggle" class="md:hidden text-2xl focus:outline-none text-white hover:text-indigo-400 transition" aria-label="Toggle mobile menu">
                 <i class="fa fa-bars"></i>
             </button>
             <div class="hidden md:block">
-                <button id="search-toggle" class="text-xl hover:text-indigo-400 transition" aria-label="Open search">
+                <button id="search-toggle" class="text-xl text-white hover:text-indigo-400 transition transform hover:scale-110" aria-label="Open search">
                     <i class="fa fa-search"></i>
                 </button>
             </div>
-            <!-- Search Modal -->
-            <div id="search-modal" class="modal hidden">
-                <div class="modal-content w-full max-w-2xl p-6">
-                    <span class="modal-close">×</span>
-                    <form id="search-form" role="search">
-                        <input type="search" id="search-input" class="form-input w-full mb-4" placeholder="Search Nexus..." aria-label="Search through site content">
-                    </form>
-                    <div id="search-results" class="text-gray-300"></div>
-                </div>
-            </div>
         </div>
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-gray-900">
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-900 translate-y-[-100%] transition-transform duration-300 ease-in-out">
             <div class="flex flex-col space-y-2 px-4 py-4">
-                <a href="code.html" class="hover:text-indigo-400 transition">Code</a>
-                <a href="videos.html" class="hover:text-indigo-400 transition">Videos</a>
-                <a href="#extras" class="hover:text-indigo-400 transition">Extras</a>
+                <a href="music.html" class="nav-link relative text-white hover:text-indigo-400 transition">Music</a>
+                <a href="art.html" class="nav-link relative text-white hover:text-indigo-400 transition">Art</a>
+                <a href="code.html" class="nav-link relative text-white hover:text-indigo-400 transition">Code</a>
+                <a href="videos.html" class="nav-link relative text-white hover:text-indigo-400 transition">Videos</a>
+                <a href="blog.html" class="nav-link relative text-white hover:text-indigo-400 transition">Blog</a>
+                <a href="#extras" class="nav-link relative text-white hover:text-indigo-400 transition">Extras</a>
+                <a href="index.html#contact" class="nav-link relative text-white hover:text-indigo-400 transition">Contact</a>
             </div>
         </div>
     </nav>
@@ -195,140 +115,7 @@
     </footer>
 
     <!-- Scripts -->
-    <script>
-        // Navbar Toggle
-        document.getElementById('menu-toggle').addEventListener('click', () => {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
-        });
-
-        // Modal Functionality
-        const modal = document.getElementById('image-modal');
-        const modalImage = document.getElementById('modal-image');
-        const closeModal = document.querySelector('.modal-close');
-
-        function openModal(src, alt) {
-            modalImage.src = src;
-            modalImage.alt = alt;
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden'; // Prevent scrolling
-        }
-
-        closeModal.addEventListener('click', () => {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto'; // Restore scrolling
-        });
-
-        // Close modal when clicking outside the image
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-        });
-
-        // Close modal with Escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal.style.display === 'flex') {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-        });
-
-        // Search Index
-        const searchIndex = [
-            {
-                title: "Home - Nexus",
-                description: "The Saint's Mouth Bleeds, PROJECT SUNSHINE, Edge of Nowhere, encounters, bilzeebub music, portfolio, code, contact",
-                url: "index.html",
-                keywords: ["home", "nexus", "music", "art", "code", "videos"]
-            },
-            {
-                title: "Music - bilzeebub",
-                description: "Music is the language of God, math is the syntax. Explore bilzeebub's music journey since 2020/21 with Black Santa.",
-                url: "music.html",
-                keywords: ["music", "bilzeebub", "black santa", "frequencies"]
-            },
-            {
-                title: "Art - Portfolio",
-                description: "Thank you for observing my work, now it is real. View digital art creations like Creation of Man, Shambho, and more.",
-                url: "art.html",
-                keywords: ["art", "portfolio", "digital art", "creation", "shambho"]
-            },
-            {
-                title: "Code - Github",
-                description: "Explore coding projects on Github. The Nexus is the realization of a vision from batch scripts to systems.",
-                url: "code.html",
-                keywords: ["code", "github", "programming", "nexus"]
-            },
-            {
-                title: "Videos - Nexus",
-                description: "Watch videos like neurological stimulation, p h o n k, urmybabe, and Rick N Morty - SwuM.",
-                url: "videos.html",
-                keywords: ["videos", "youtube", "music videos", "swum"]
-            }
-        ];
-
-        // Search Modal Toggle
-        document.getElementById('search-toggle').addEventListener('click', () => {
-            document.getElementById('search-modal').classList.toggle('hidden');
-            document.getElementById('search-input').focus();
-        });
-
-        // Search Logic
-        document.getElementById('search-form').addEventListener('input', (e) => {
-            const query = e.target.value.trim().toLowerCase();
-            const resultsEl = document.getElementById('search-results');
-            
-            if (query.length < 2) {
-                resultsEl.innerHTML = '<p class="text-gray-400">Enter at least 2 characters to search.</p>';
-                return;
-            }
-
-            const results = searchIndex.filter(item => 
-                item.title.toLowerCase().includes(query) ||
-                item.description.toLowerCase().includes(query) ||
-                item.keywords.some(keyword => keyword.includes(query))
-            );
-
-            if (results.length === 0) {
-                resultsEl.innerHTML = '<p class="text-gray-400">No results found.</p>';
-                return;
-            }
-
-            resultsEl.innerHTML = results.map(item => `
-                <div class="mb-4">
-                    <a href="${item.url}" class="text-indigo-400 hover:underline text-lg">${item.title}</a>
-                    <p class="text-gray-300">${item.description}</p>
-                </div>
-            `).join('');
-        });
-
-        // Close Modal
-        const searchModal = document.getElementById('search-modal');
-        const searchClose = searchModal.querySelector('.modal-close');
-
-        searchClose.addEventListener('click', () => {
-            searchModal.classList.add('hidden');
-            document.getElementById('search-input').value = '';
-            document.getElementById('search-results').innerHTML = '';
-        });
-
-        searchModal.addEventListener('click', (e) => {
-            if (e.target === searchModal) {
-                searchModal.classList.add('hidden');
-                document.getElementById('search-input').value = '';
-                document.getElementById('search-results').innerHTML = '';
-            }
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && !searchModal.classList.contains('hidden')) {
-                searchModal.classList.add('hidden');
-                document.getElementById('search-input').value = '';
-                document.getElementById('search-results').innerHTML = '';
-            }
-        });
-    </script>
+    <script src="scripts.js"></script>
 </body>
 
 </html>
