@@ -71,6 +71,7 @@
 /* Mobile Menu Slide-In */
 #mobile-menu:not(.hidden) {
     transform: translateY(0);
+    animation: gradientShift 1s ease infinite;
 }
 
 /* Modal styles */
