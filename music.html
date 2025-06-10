@@ -20,7 +20,7 @@
 <body class="bg-black text-white font-sans">
     <!-- Navbar -->
     <nav class="fixed top-0 left-0 w-full bg-gray-900 shadow-lg z-50 h-16 transition-all duration-300" id="navbar">
-        <div class="container mx-auto px-4 h-full flex items-center justify-between">
+        <div class="container mx-auto px-4 h-full flex items-center justify-center">
             <div class="flex items-center space-x-4">
                 <a href="index.html" class="flex items-center transition transform hover:scale-110 logo-pulse" id="logo">
                     <img src="/nexus/img/bzb.png" alt="bzb" class="h-10 w-auto">
@@ -38,11 +38,6 @@
             <button id="menu-toggle" class="md:hidden text-2xl focus:outline-none text-white hover:text-indigo-400 transition" aria-label="Toggle mobile menu">
                 <i class="fa fa-bars"></i>
             </button>
-            <div class="hidden md:block">
-                <button id="search-toggle" class="text-xl text-white hover:text-indigo-400 transition transform hover:scale-110" aria-label="Open search">
-                    <i class="fa fa-search"></i>
-                </button>
-            </div>
         </div>
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-gray-900 translate-y-[-100%] transition-transform duration-300 ease-in-out">
@@ -62,33 +57,9 @@
     <main class="w-full pt-24 pb-8">
         <!-- Album Cards Section -->
         <section class="content-section px-4 py-12">
-            <div class="container mx-auto max-w-4xl">
-                <!-- <h2 class="text-2xl font-semibold mb-2 text-center">bilzeebub</h2> -->
-                <p class="text-gray-400 italic mb-6 text-center">Music is the language of God, math is the syntax.</p>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                    <div class="album-card" onclick="showAlbum(1)">
-                        <img src="/nexus/img/takestime.jpg" alt="It Takes Time Album Cover">
-                        <h3 class="text-lg font-semibold mt-2">It Takes Time</h3>
-                        <p class="text-gray-400 text-sm">Available on all platforms</p>
-                    </div>
-                    <div class="album-card" onclick="showAlbum(2)">
-                        <img src="/nexus/img/9 (9).jpg" alt="The Saint's Mouth Bleeds Album Cover">
-                        <h3 class="text-lg font-semibold mt-2">The Saint's Mouth Bleeds</h3>
-                        <p class="text-gray-400 text-sm">Available on all platforms</p>
-                    </div>
-                    <div class="album-card" onclick="showAlbum(3)">
-                        <img src="/nexus/img/space.jpg" alt="Edge of Nowhere Album Cover">
-                        <h3 class="text-lg font-semibold mt-2">Edge of Nowhere</h3>
-                        <p class="text-gray-400 text-sm">Available on all platforms</p>
-                    </div>
-                    <div class="album-card" onclick="showAlbum(4)">
-                        <img src="/nexus/img/UFO.png" alt="Encounters Album Cover">
-                        <h3 class="text-lg font-semibold mt-2">encounters</h3>
-                        <p class="text-gray-400 text-sm">Available on all platforms</p>
-                    </div>
-                </div>
-                <div id="embed-container" class="embed-container"></div>
-            </div>
+            <!-- Elfsight Audio Player | Untitled Audio Player -->
+            <script src="https://static.elfsight.com/platform/platform.js" async></script>
+            <div class="elfsight-app-47375e46-2034-4bc0-8989-20e7ea0d6723" data-elfsight-app-lazy></div>
         </section>
     </main>
 
