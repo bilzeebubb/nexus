@@ -71,8 +71,11 @@
 /* Mobile Menu Slide-In */
 #mobile-menu:not(.hidden) {
     transform: translateY(0);
+    background: linear-gradient(45deg, #00FF00, #FF00FF, #00FFFF);
+    background-size: 200% 200%;
     animation: gradientShift 1s ease infinite;
 }
+
 
 /* Modal styles */
 .modal {
