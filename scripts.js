@@ -241,7 +241,6 @@ function initializeMusic() {
             id: 1,
             title: "It Takes Time",
             artist: "bilzeebub",
-            albumArt: "/nexus/img/takestime.jpg",
             status: "Available on all platforms",
             embeds: {
                 spotify: "https://open.spotify.com/embed/album/7s3oAOeQi5PZ2BfKm8Ub8p?utm_source=generator&theme=0",
@@ -253,7 +252,6 @@ function initializeMusic() {
             id: 2,
             title: "The Saint's Mouth Bleeds",
             artist: "bilzeebub",
-            albumArt: "/nexus/img/9 (9).jpg",
             status: "Available on all platforms",
             embeds: {
                 spotify: "https://open.spotify.com/embed/album/2CepuWwtImRMW3Pec2IgYz?utm_source=generator&theme=0",
@@ -265,7 +263,6 @@ function initializeMusic() {
             id: 3,
             title: "Edge of Nowhere",
             artist: "bilzeebub",
-            albumArt: "/nexus/img/space.jpg",
             status: "Available on all platforms",
             embeds: {
                 spotify: "https://open.spotify.com/embed/album/45zUHDMjnyd7YlPHaNCOqI?utm_source=generator&theme=0",
@@ -277,7 +274,6 @@ function initializeMusic() {
             id: 4,
             title: "encounters",
             artist: "bilzeebub",
-            albumArt: "/nexus/img/UFO.png",
             status: "Available on all platforms",
             embeds: {
                 spotify: "https://open.spotify.com/embed/album/6tX8MxyAp9Kl051u7Aovs8?utm_source=generator&theme=0",
