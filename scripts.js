@@ -602,3 +602,14 @@ switch (page) {
         initializeBlog();
         break;
 }
+
+function openModal(src, caption) {
+  const modal = document.getElementById('image-modal');
+  const modalImg = document.getElementById('modal-image');
+  const modalCaption = document.getElementById('modal-caption');
+  modal.style.display = 'block';
+  modalImg.src = src;
+  modalCaption.textContent = caption;
+  modalCaption.classList.add('glitch');
+  modalCaption.setAttribute('data-text', caption);
+}

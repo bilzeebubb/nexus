@@ -279,3 +279,104 @@
 .content-section.canvas-overlay {
     backdrop-filter: blur(4px); /* Subtle blur for modern look */
 }
+
+/* Glitch Effect */
+.glitch {
+  position: relative;
+  color: #FFFFFF;
+  font-family: 'VCR OSD Mono', monospace;
+  animation: glitch 0.5s infinite alternate;
+}
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  color: #00FF00;
+}
+.glitch::before {
+  left: 2px;
+  text-shadow: -2px 0 #FF00FF;
+  animation: glitch-top 1s infinite alternate;
+}
+.glitch::after {
+  left: -2px;
+  text-shadow: 2px 0 #00FFFF;
+  animation: glitch-bottom 1s infinite alternate;
+}
+@keyframes glitch {
+  0% { transform: translate(0); }
+  100% { transform: translate(-2px, 2px); }
+}
+@keyframes glitch-top {
+  0% { clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%); }
+  100% { clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%); }
+}
+@keyframes glitch-bottom {
+  0% { clip-path: polygon(0 66%, 100% 66%, 100% 100%, 0 100%); }
+  100% { clip-path: polygon(0 66%, 100% 66%, 100% 100%, 0 100%); }
+}
+
+/* Neon Glow */
+.glow {
+  box-shadow: 0 0 10px #00FF00, 0 0 20px #00FF00;
+}
+.glow:hover {
+  box-shadow: 0 0 20px #00FF00, 0 0 30px #00FF00;
+}
+
+h1, h2, .nav-link, .inline-block {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+h1 {
+  font-size: 3.5rem;
+  text-shadow: 0 0 5px #00FF00;
+}
+h2 {
+  font-size: 2.5rem;
+  text-shadow: 0 0 5px #00FF00;
+}
+.nav-link {
+  font-size: 1.25rem;
+}
+.inline-block {
+  font-size: 1.5rem;
+}
+p, .text-gray-400, .text-gray-300 {
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Navbar Glitch Hover */
+.nav-link {
+  position: relative;
+}
+.nav-link:hover {
+  animation: glitch-hover 0.3s ease-in-out;
+}
+@keyframes glitch-hover {
+  0% { transform: translate(0); }
+  50% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+/* Portfolio Card Hover */
+.portfolio-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+.portfolio-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #00FF00;
+}
+
+.music-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.music-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #00FF00;
+}
