@@ -9,9 +9,9 @@
 
 /* Navbar Background Animation */
 #navbar {
-    background: linear-gradient(45deg, #1f2937, #111827, #1f2937);
+    background: linear-gradient(45deg, #00FF00, #FF00FF, #00FFFF);
     background-size: 200% 200%;
-    animation: gradientShift 15s ease infinite;
+    animation: gradientShift 1s ease infinite;
 }
 
 @keyframes gradientShift {
@@ -22,8 +22,7 @@
 
 /* Scroll Effect */
 #navbar.scrolled {
-    box-shadow: 0 4px 8px rgba(165, 180, 252, 0.3); /* Indigo-300 shadow */
-    transform: scale(0.98);
+    box-shadow: 0 4px 8px #1a1a1a; /* Indigo-300 shadow */
 }
 
 /* Animated Underline for Nav Links */
@@ -39,7 +38,7 @@
     left: 50%;
     width: 0;
     height: 2px;
-    background: #a5b4fc; /* Indigo-300 */
+    background: #00FF00; /* Indigo-300 */
     transition: width 0.3s ease, left 0.3s ease;
 }
 
@@ -50,7 +49,7 @@
 
 /* Active Link Styling */
 .nav-link.active {
-    color: #a5b4fc; /* Indigo-300 */
+    color: #FF00FF; /* Indigo-300 */
 }
 
 .nav-link.active::after {
@@ -108,7 +107,7 @@
 }
 
 .modal-close:hover {
-    color: #a5b4fc; /* Indigo-300 */
+    color: #00FF00; /* Indigo-300 */
 }
 
 #search-modal:not(.hidden) {
@@ -152,7 +151,7 @@
 /* Form inputs */
 .form-input {
     background: #1a1a1a;
-    border: 1px solid #4b5563; /* Gray-600 */
+    border: 1px solid #00FF00; /* Gray-600 */
     color: white;
     padding: 10px;
     width: 100%;
@@ -160,7 +159,7 @@
 
 .form-input:focus {
     outline: none;
-    border-color: #a5b4fc; /* Indigo-300 */
+    border-color: #FF00FF; /* Indigo-300 */
 }
 
 /* Hero section (index.html) */
@@ -299,12 +298,12 @@
 .glitch::before {
   left: 2px;
   text-shadow: -2px 0 #FF00FF;
-  animation: glitch-top 1s infinite alternate;
+  animation: glitch-top 0.25s infinite alternate;
 }
 .glitch::after {
   left: -2px;
   text-shadow: 2px 0 #00FFFF;
-  animation: glitch-bottom 1s infinite alternate;
+  animation: glitch-bottom 0.25s infinite alternate;
 }
 @keyframes glitch {
   0% { transform: translate(0); }
@@ -312,10 +311,14 @@
 }
 @keyframes glitch-top {
   0% { clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%); }
+    0% { transform: translate(0); }
+  100% { transform: translate(6px, -6px); }
   100% { clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%); }
 }
 @keyframes glitch-bottom {
   0% { clip-path: polygon(0 66%, 100% 66%, 100% 100%, 0 100%); }
+  0% { transform: translate(0); }
+  100% { transform: translate(-6px, 6px); }
   100% { clip-path: polygon(0 66%, 100% 66%, 100% 100%, 0 100%); }
 }
 
@@ -325,7 +328,7 @@
 }
 @keyframes glitch-hover {
     0% { transform: translate(0); }
-    50% { transform: translate(2px, -2px); }
+    50% { transform: translate(-2px, 2px); }
     100% { transform: translate(0); }
 }
 
@@ -365,9 +368,11 @@ p, .text-gray-400, .text-gray-300 {
   position: relative;
 }
 .nav-link:hover {
-  animation: glitch-hover 0.3s ease-in-out;
+  animation: glitch-hover 0.2s ease-in-out;
 }
 @keyframes glitch-hover {
+  -50% { transform: translate(0); }
+  -25% { transform: translate(-4px, 2px); }
   0% { transform: translate(0); }
   50% { transform: translate(2px, -2px); }
   100% { transform: translate(0); }
@@ -385,6 +390,7 @@ p, .text-gray-400, .text-gray-300 {
 
 .music-card {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
 }
 .music-card:hover {
   transform: scale(1.05);
